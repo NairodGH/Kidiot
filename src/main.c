@@ -12,6 +12,8 @@ void my_draw_color(char cell, Vector2 pos, Vector2 size_rect)
         DrawRectangleV(pos, size_rect, BLUE);
     else if (cell == 'W')
         DrawRectangleV(pos, size_rect, DARKBLUE);
+    else if (cell == 'F')
+        DrawRectangleV(pos, size_rect, DARKGRAY);
     else
         DrawRectangleV(pos, size_rect, GRAY);
 }
