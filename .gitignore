@@ -3,6 +3,7 @@
 
 build/
 kidiot
+.vscode
 
 # Object files
 *.o

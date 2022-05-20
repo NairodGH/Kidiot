@@ -23,6 +23,9 @@ set(INC
 )
 
 set(SRC
+  src/game/init_game.c
+  src/game/map_utils.c
+  src/game/game_loop.c
   src/kidiot.c
 )
 
