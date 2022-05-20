@@ -4,10 +4,7 @@ cmake_minimum_required(VERSION 3.16)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 # Project name
-project(indie_project LANGUAGES CXX)
-
-# find packages
-find_package(GLEW REQUIRED)
+project(kidiot LANGUAGES CXX)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     add_compile_options(-fdiagnostics-color=always)
@@ -43,9 +40,6 @@ target_include_directories(${EXEC_NAME} PUBLIC
 # link with libs
 find_package(raylib REQUIRED)
 target_link_libraries(${EXEC_NAME} PUBLIC raylib)
-target_link_libraries(${EXEC_NAME} PUBLIC GLEW)
-target_link_libraries(${EXEC_NAME} PUBLIC GL)
-target_link_libraries(${EXEC_NAME} PUBLIC assimp)
 ################## MISC ###################
 
 add_custom_command(
