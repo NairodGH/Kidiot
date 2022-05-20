@@ -14,10 +14,11 @@ Basically a 2d "Who's your daddy" coded in C with raylib.
 - F = Fridge
 - M = Microwave
 - O = Oven
-- T = Table
+- T = Table (no interaction, collision)
 - S = Staircase
 - V = Vacuum cleaner
 - W = WC
+- Z = Zzz (no interaction, collision)
 
 first_floor.txt
 ```
@@ -42,7 +43,7 @@ first_floor.txt
 second_floor.txt
 ```
 #####################
-#E        #        E#
+#E   Z    #    Z   E#
 #         #         #
 #         #         #
 #C        #        C#
