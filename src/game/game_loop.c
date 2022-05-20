@@ -28,7 +28,7 @@ static bool is_obstacle(char obs, entity_t *play)
 {
     if (obs == 'F' || obs == '#' || obs == 'O')
         return true;
-    if (obs == 'E' && play->floor == 0) {
+    if (obs == 'W' && play->floor == 0) {
         play->pos.x = 1;
         play->pos.y = 1;
         play->floor = 1;
