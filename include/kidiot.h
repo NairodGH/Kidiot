@@ -15,6 +15,7 @@ char **read_map(char *path);
 bool game_loop(
     char **first_floor, char **second_floor, entity_t players[], int keys[]);
 char **get_map(char *str);
+int get_map_size(char **map);
 
 void print_double_tab(char **map);
 void free_double_tab(char **map);

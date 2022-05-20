@@ -19,4 +19,5 @@ typedef struct entity_s {
     Vector2 pos;
     int floor;
     inv_t inv;
+    int hp;
 } entity_t;

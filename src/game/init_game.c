@@ -67,5 +67,7 @@ entity_t *init_entity()
     entity[1].floor = 1;
     entity[0].inv = inv;
     entity[1].inv = inv;
+    entity[0].hp = 100;
+    entity[1].hp = -1;
     return entity;
 }

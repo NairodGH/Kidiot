@@ -7,6 +7,15 @@
 
 #include "kidiot.h"
 
+int get_map_size(char **map)
+{
+    int ret = 0;
+
+    while (map[ret] != NULL)
+        ret++;
+    return ret;
+}
+
 void print_double_tab(char **map)
 {
     for (size_t x = 0; map[x] != NULL; x++)
