@@ -1,6 +1,9 @@
 # Prerequisites
 *.d
 
+build/
+kidiot
+
 # Object files
 *.o
 *.ko
