@@ -7,14 +7,14 @@
 
 #include "include.h"
 
-static bool check_death(char **floor_1, char **floor_2, entity_t *player)
+static bool check_death(entity_t *player)
 {
     char **map = NULL;
 
     if (player->baby->floor == 0)
-        map = floor_1;
+        map = player->first_floor;
     else
-        map = floor_2;
+        map = player->second_floor;
     if (map[(int)player->baby->pos.x][(int)player->baby->pos.y] == 'C' ||
         map[(int)player->baby->pos.x][(int)player->baby->pos.y] == 'O' ||
         map[(int)player->baby->pos.x][(int)player->baby->pos.y]  == 'F')
@@ -24,14 +24,42 @@ static bool check_death(char **floor_1, char **floor_2, entity_t *player)
     return false;
 }
 
-bool is_obstacle(char obs, entity_t *play)
+bool is_obstacle(char obs, entity_t *play, bool baby)
 {
     if (obs == '#' || obs == 'T' || obs == 'Z')
         return true;
-    if (obs == 'W' && play->baby->floor == 0) {
-        play->baby->pos.x = 1;
-        play->baby->pos.y = 1;
-        play->baby->floor = 1;
+    if (obs == 'W' && baby) {
+        if (play->baby->floor == 0) {
+            play->baby->pos = find_spawn_pos('W', play->second_floor);
+            play->baby->floor = 1;
+        }
+        else {
+            play->baby->pos = find_spawn_pos('W', play->first_floor);
+            play->baby->floor = 0;
+        }
+        return true;
+    }
+    if (obs == 'S') {
+        if (baby) {
+            if (play->baby->floor == 0) {
+                play->baby->pos = find_spawn_pos('S', play->second_floor);
+                play->baby->floor = 1;
+            }
+            else {
+                play->baby->pos = find_spawn_pos('S', play->first_floor);
+                play->baby->floor = 0;
+            }
+        }
+        else {
+            if (play->mom->floor == 0) {
+                play->mom->pos = find_spawn_pos('S', play->second_floor);
+                play->mom->floor = 1;
+            }
+            else {
+                play->mom->pos = find_spawn_pos('S', play->first_floor);
+                play->mom->floor = 0;
+            }
+        }
         return true;
     }
     return false;
@@ -45,11 +73,11 @@ void print_keys(int keys[])
     printf("\n");
 }
 
-bool game_loop(char **floor_1, char **floor_2, entity_t *play, int keys[])
+bool game_loop(entity_t *play, int keys[])
 {
-    move_players_baby(floor_1, floor_2, play, keys);
-    move_players_mom(floor_1, floor_2, play, keys);
-    if (check_death(floor_1, floor_2, play))
+    move_players_baby(play, keys);
+    move_players_mom(play, keys);
+    if (check_death(play))
         return true;
     return false;
 }

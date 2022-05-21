@@ -31,6 +31,8 @@ typedef struct mom_s {
 typedef struct entity_s {
     baby_t *baby;
     mom_t *mom;
+    char **first_floor;
+    char **second_floor;
 } entity_t;
 
 typedef struct {
@@ -51,19 +53,17 @@ typedef struct {
 #define W "\033[1;0m"
 
 char **read_map(char *path);
-bool game_loop(char **floor_1, char **floor_2, entity_t players[], int keys[]);
+bool game_loop(entity_t *play, int keys[]);
 char **get_map(char *str);
 int get_map_size(char **map);
 
 void print_double_tab(char **map);
 void free_double_tab(char **map);
 
-entity_t *init_entity(char **map);
+entity_t *init_entity(char **first_floor, char **second_floor);
 Vector2 find_spawn_pos(char cell, char **map);
 void print_keys(int keys[]);
 
-bool is_obstacle(char obs, entity_t *play);
-void move_players_mom(char **floor_1, char **floor_2,
-    entity_t *play, int keys[]);
-void move_players_baby(char **floor_1, char **floor_2,
-    entity_t *play, int keys[]);
+bool is_obstacle(char obs, entity_t *play, bool baby);
+void move_players_mom(entity_t *play, int keys[]);
+void move_players_baby(entity_t *play, int keys[]);

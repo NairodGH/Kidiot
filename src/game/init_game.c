@@ -47,7 +47,7 @@ char **read_map(char *path)
     return (map);
 }
 
-entity_t *init_entity(char **map)
+entity_t *init_entity(char **first_floor, char **second_floor)
 {
     entity_t *entity = malloc(sizeof(entity_t) * 1);
     baby_t *baby = malloc(sizeof(baby_t) * 1);
@@ -58,8 +58,10 @@ entity_t *init_entity(char **map)
     baby->floor = 0;
     baby->hp = 100;
     mom->floor = 0;
-    baby->pos = find_spawn_pos('b', map);
-    mom->pos = find_spawn_pos('m', map);
+    entity->first_floor = first_floor;
+    entity->second_floor = second_floor;
+    baby->pos = find_spawn_pos('b', entity->first_floor);
+    mom->pos = find_spawn_pos('m', entity->first_floor);
     entity->baby = baby;
     entity->mom = mom;
     return entity;

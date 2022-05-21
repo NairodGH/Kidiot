@@ -23,56 +23,58 @@ void my_draw_color(char cell, Vector2 pos, Vector2 size_rect)
         DrawRectangleV(pos, size_rect, DARKGRAY);
     if (cell == 'T')
         DrawRectangleV(pos, size_rect, GRAY);
+    if (cell == 'S')
+        DrawRectangleV(pos, size_rect, PURPLE);
 }
 
-void draw_second_map(char **floor_2, entity_t *play, int wd, int hg)
+void draw_second_map(entity_t *play, int wd, int hg)
 {
     Vector2 pos_s = {(wd / 2), 0};
     Vector2 size_rect_s =
-        {wd / strlen(floor_2[0]) / 2, hg / get_map_size(floor_2)};
-    Vector2 baby_play = {play->baby->pos.y * (wd / strlen(floor_2[0]) / 2),
-        play->baby->pos.x * (hg / get_map_size(floor_2))};
-    Vector2 mom_play = {play->mom->pos.y * (wd / strlen(floor_2[0]) / 2),
-        play->mom->pos.x * (hg / get_map_size(floor_2))};
+        {wd / strlen(play->second_floor[0]) / 2, hg / get_map_size(play->second_floor)};
+    Vector2 baby_play = {play->baby->pos.y * (wd / strlen(play->second_floor[0]) / 2),
+        play->baby->pos.x * (hg / get_map_size(play->second_floor))};
+    Vector2 mom_play = {play->mom->pos.y * (wd / strlen(play->second_floor[0]) / 2),
+        play->mom->pos.x * (hg / get_map_size(play->second_floor))};
 
-    for (size_t x  = 0; floor_2[x] != NULL; x++) {
-        for (size_t y = 0; floor_2[x][y] != '\0'; y++) {
-            my_draw_color(floor_2[x][y], pos_s, size_rect_s);
-            pos_s.x += wd / strlen(floor_2[x]) / 2;
+    for (size_t x  = 0; play->second_floor[x] != NULL; x++) {
+        for (size_t y = 0; play->second_floor[x][y] != '\0'; y++) {
+            my_draw_color(play->second_floor[x][y], pos_s, size_rect_s);
+            pos_s.x += wd / strlen(play->second_floor[x]) / 2;
         }
         pos_s.x = (wd / 2);
-        pos_s.y += hg / get_map_size(floor_2);
+        pos_s.y += hg / get_map_size(play->second_floor);
     }
     if (play->baby->floor == 1) {
         baby_play.x += wd / 2;
-        DrawRectangleV(mom_play, size_rect_s, MAROON);
+        DrawRectangleV(baby_play, size_rect_s, MAROON);
     }
     if (play->mom->floor == 1) {
         mom_play.x += wd / 2;
-        DrawRectangleV(baby_play, size_rect_s, YELLOW);
+        DrawRectangleV(mom_play, size_rect_s, YELLOW);
     }
 }
 
-void draw_map(char **floor_1, char **floor_2, entity_t *play)
+void draw_map(entity_t *play)
 {
     int hg = GetScreenHeight();
     int wd = GetScreenWidth();
     Vector2 pos = {0, 0};
-    Vector2 size_rect = {wd / strlen(floor_1[0]) / 2, hg / get_map_size(floor_1)};
-    Vector2 baby_play = {play->baby->pos.y * (wd / strlen(floor_1[0]) / 2),
-        play->baby->pos.x * (hg / get_map_size(floor_1))};
-    Vector2 mom_play = {play->mom->pos.y * (wd / strlen(floor_1[0]) / 2),
-        play->mom->pos.x * (hg / get_map_size(floor_1))};
+    Vector2 size_rect = {wd / strlen(play->first_floor[0]) / 2, hg / get_map_size(play->first_floor)};
+    Vector2 baby_play = {play->baby->pos.y * (wd / strlen(play->first_floor[0]) / 2),
+        play->baby->pos.x * (hg / get_map_size(play->first_floor))};
+    Vector2 mom_play = {play->mom->pos.y * (wd / strlen(play->first_floor[0]) / 2),
+        play->mom->pos.x * (hg / get_map_size(play->first_floor))};
 
-    for (size_t x = 0; floor_1[x] != NULL; x++) {
-        for (size_t y = 0; floor_1[x][y] != '\0'; y++) {
-            my_draw_color(floor_1[x][y], pos, size_rect);
-            pos.x += wd / strlen(floor_1[x]) / 2;
+    for (size_t x = 0; play->first_floor[x] != NULL; x++) {
+        for (size_t y = 0; play->first_floor[x][y] != '\0'; y++) {
+            my_draw_color(play->first_floor[x][y], pos, size_rect);
+            pos.x += wd / strlen(play->first_floor[x]) / 2;
         }
         pos.x = 0;
-        pos.y += hg / get_map_size(floor_1);
+        pos.y += hg / get_map_size(play->first_floor);
     }
-    draw_second_map(floor_2, play, wd, hg);
+    draw_second_map(play, wd, hg);
     if (play->baby->floor == 0)
         DrawRectangleV(baby_play, size_rect, MAROON);
     if (play->mom->floor == 0)
@@ -134,7 +136,7 @@ int main(int ac, char **av)
 {
     char **floor_1 = read_map("map/first_floor.txt");
     char **floor_2 = read_map("map/second_floor.txt");
-    entity_t *players = init_entity(floor_1);
+    entity_t *players = init_entity(floor_1, floor_2);
     
     SetTraceLogLevel(LOG_NONE);
     if (args_invalid(ac, av))
@@ -143,10 +145,10 @@ int main(int ac, char **av)
     SetTargetFPS(atoi(av[3]));
     for (int keys[18] = {0}; !WindowShouldClose(); my_memset(keys, 0, 18)) {
         get_keys(keys);
-        game_loop(floor_1, floor_2, players, keys);
+        game_loop(players, keys);
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        draw_map(floor_1, floor_2, players);
+        draw_map(players);
         EndDrawing();
     }
     free_double_tab(floor_1);
