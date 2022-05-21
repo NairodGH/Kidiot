@@ -5,20 +5,20 @@
 ** init_game
 */
 
-#include "kidiot.h"
+#include "include.h"
 
-static bool check_death(char **first_floor, char **second_floor, entity_t *player)
+static bool check_death(char **floor_1, char **floor_2, entity_t *player)
 {
     char **map = NULL;
 
     if (player->floor == 0)
-        map = first_floor;
+        map = floor_1;
     else
-        map = second_floor;
+        map = floor_2;
     if (map[(int)player->pos.x][(int)player->pos.y] == 'C' ||
         map[(int)player->pos.x][(int)player->pos.y] == 'O' ||
         map[(int)player->pos.x][(int)player->pos.y]  == 'F')
-        player->hp = player->hp -= 10;
+        player->hp -= 10;
     if (player->hp <= 0)
         return true;
     return false;
@@ -26,7 +26,7 @@ static bool check_death(char **first_floor, char **second_floor, entity_t *playe
 
 static bool is_obstacle(char obs, entity_t *play)
 {
-    if (obs == 'F' || obs == '#' || obs == 'O')
+    if (obs == '#' || obs == 'T' || obs == 'Z')
         return true;
     if (obs == 'W' && play->floor == 0) {
         play->pos.x = 1;
@@ -62,15 +62,15 @@ static bool move_players_split(char **map, entity_t play[], int keys[])
     return false;
 }
 
-static void move_players(char **first_floor, char **second_floor,
+static void move_players(char **floor_1, char **floor_2,
     entity_t play[], int keys[])
 {
     char **map = NULL;
 
     if (play[0].floor == 0)
-        map = first_floor;
+        map = floor_1;
     else
-        map = second_floor;
+        map = floor_2;
     if (move_players_split(map, play, keys))
         return;
     if (keys[0] == 1 && !(is_obstacle
@@ -87,11 +87,10 @@ static void move_players(char **first_floor, char **second_floor,
         play[0].pos.x += 1;
 }
 
-bool game_loop(
-    char **first_floor, char **second_floor, entity_t play[], int keys[])
+bool game_loop(char **floor_1, char **floor_2, entity_t play[], int keys[])
 {
-    move_players(first_floor, second_floor, play, keys);
-    if (check_death(first_floor, second_floor, &play[0]))
+    move_players(floor_1, floor_2, play, keys);
+    if (check_death(floor_1, floor_2, &play[0]))
         return true;
     return false;
 }

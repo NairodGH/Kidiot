@@ -5,7 +5,7 @@
 ** init_game
 */
 
-#include "kidiot.h"
+#include "include.h"
 
 int get_map_size(char **map)
 {
