@@ -7,6 +7,23 @@
 
 #include "include.h"
 
+void free_everything(kidiot_t *kidiot, char *buffer)
+{
+    if (buffer)
+        free(buffer);
+    free_double_tab(kidiot->first_floor);
+    free_double_tab(kidiot->second_floor);
+    free(kidiot->baby->bathtub);
+    free(kidiot->baby->electric);
+    free(kidiot->baby->oven);
+    free(kidiot->baby->cactus);
+    free(kidiot->baby->fridge);
+    free(kidiot->tp);
+    free(kidiot->baby);
+    free(kidiot->mom);
+    free(kidiot);
+}
+
 static void get_keys(int *keys)
 {
     if (IsKeyPressed(KEY_RIGHT)) keys[0] = 1;
@@ -87,9 +104,7 @@ int main(int ac, char **av)
         EndDrawing();
         gest_clock(kidiot);
     }
-    free_double_tab(kidiot->first_floor);
-    free_double_tab(kidiot->second_floor);
-    free(kidiot);
+    free_everything(kidiot, buffer);
     CloseWindow();
     return 0;
 }
