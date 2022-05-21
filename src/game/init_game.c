@@ -5,7 +5,7 @@
 ** init_game
 */
 
-#include "include.h"
+#include "includes.h"
 
 static char *open_file(int fd, struct stat *stats, char *path)
 {
@@ -112,7 +112,5 @@ kidiot_t *init_kidiot(char **first_floor, char **second_floor)
     kidiot->textures[1] = LoadTexture("ressources/marge.png");
     kidiot->textures[2] = LoadTexture("ressources/misc.png");
     kidiot->textures[3] = LoadTexture("ressources/electricity.png");
-    for (size_t i = 0; i != 18; i++)
-        kidiot->keys[i] = 0;
     return kidiot;
 }

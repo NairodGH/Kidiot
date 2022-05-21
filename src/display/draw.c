@@ -5,7 +5,7 @@
 ** draw
 */
 
-#include "include.h"
+#include "includes.h"
 
 void my_draw_color(char cell, Vector2 pos, Vector2 size_rect, Texture2D textures[4])
 {
@@ -31,6 +31,16 @@ void my_draw_color(char cell, Vector2 pos, Vector2 size_rect, Texture2D textures
         DrawTextureRec(textures[2], (Rectangle){220, 0, 73, 57}, pos, RAYWHITE);
     if (cell == 'M')
         DrawTextureRec(textures[2], (Rectangle){147, 0, 73, 57}, pos, RAYWHITE);
+}
+
+void draw_baby(kidiot_t *kidiot, Vector2 pos)
+{
+    DrawTextureRec(kidiot->textures[0], (Rectangle){7, 0, 42, 42}, pos, RAYWHITE);
+}
+
+void draw_mom(kidiot_t *kidiot, Vector2 pos)
+{
+    DrawTextureRec(kidiot->textures[1], (Rectangle){16, 4, 21, 58}, pos, RAYWHITE);
 }
 
 void draw_second_map(kidiot_t *play, int wd, int hg)
@@ -82,7 +92,7 @@ void draw_map(kidiot_t *play)
     }
     draw_second_map(play, wd, hg);
     if (play->baby->floor == 0)
-        DrawRectangleV(baby_play, size_rect, MAROON);
+        draw_baby(play, baby_play);
     if (play->mom->floor == 0)
-        DrawRectangleV(mom_play, size_rect, YELLOW);
+        draw_mom(play, mom_play);
 }

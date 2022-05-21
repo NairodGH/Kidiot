@@ -5,7 +5,7 @@
 ** move_players
 */
 
-#include "include.h"
+#include "includes.h"
 
 static bool move_players_baby_split(char **map, kidiot_t *play, int keys[])
 {

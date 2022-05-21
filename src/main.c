@@ -5,7 +5,7 @@
 ** main
 */
 
-#include "include.h"
+#include "includes.h"
 
 void free_everything(kidiot_t *kidiot, char *buffer)
 {
@@ -91,6 +91,7 @@ int main(int ac, char **av)
     save_hp = kidiot->baby->hp;
     for (int keys[18] = {0}; !WindowShouldClose(); my_memset(keys, 0, 18)) {
         get_keys(keys);
+        kidiot->keys = keys;
         if (game_loop(kidiot, keys))
             break;
         BeginDrawing();

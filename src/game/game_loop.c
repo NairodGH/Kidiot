@@ -5,7 +5,7 @@
 ** init_game
 */
 
-#include "include.h"
+#include "includes.h"
 
 static void split_check_death(kidiot_t *player, char **map)
 {

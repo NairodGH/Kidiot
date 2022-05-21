@@ -5,7 +5,7 @@
 ** init_game
 */
 
-#include "include.h"
+#include "includes.h"
 
 size_t count_new_line(char *str)
 {

@@ -5,7 +5,7 @@
 ** init_game
 */
 
-#include "include.h"
+#include "includes.h"
 
 Vector2 find_spawn_pos(char cell, char **map)
 {

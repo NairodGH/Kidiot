@@ -74,7 +74,7 @@ typedef struct {
     char **first_floor;
     char **second_floor;
     Texture2D textures[4];
-    bool keys[18];
+    int *keys;
 } kidiot_t;
 
 #define R "\033[1;31m"
