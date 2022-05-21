@@ -60,6 +60,7 @@ void free_double_tab(char **map);
 
 entity_t *init_entity(char **map);
 Vector2 find_spawn_pos(char cell, char **map);
+void print_keys(int keys[]);
 
 bool is_obstacle(char obs, entity_t *play);
 void move_players_mom(char **floor_1, char **floor_2,

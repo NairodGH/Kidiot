@@ -37,6 +37,14 @@ bool is_obstacle(char obs, entity_t *play)
     return false;
 }
 
+void print_keys(int keys[])
+{
+    for (size_t i = 0; i != 18; i++) {
+        printf("i: %d re: %d ", i, keys[i]);
+    }
+    printf("\n");
+}
+
 bool game_loop(char **floor_1, char **floor_2, entity_t *play, int keys[])
 {
     move_players_baby(floor_1, floor_2, play, keys);

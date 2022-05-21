@@ -90,10 +90,10 @@ static void get_keys(int *keys)
     if (IsKeyPressed(KEY_LEFT) && IsKeyPressed(KEY_UP)) keys[6] = 1;
     if (IsKeyPressed(KEY_LEFT) && IsKeyPressed(KEY_DOWN)) keys[7] = 1;
     if (IsKeyPressed(KEY_ENTER)) keys[8];
-    if (IsKeyPressed(KEY_D)) keys[9] = 1, printf("droite\n");
-    if (IsKeyPressed(KEY_A)) keys[10] = 1, printf("gauche\n");
-    if (IsKeyPressed(KEY_W)) keys[11] = 1, printf("heut\n");
-    if (IsKeyPressed(KEY_S)) keys[12] = 1, printf("bas\n");
+    if (IsKeyPressed(KEY_D)) keys[9] = 1;
+    if (IsKeyPressed(KEY_A)) keys[10] = 1;
+    if (IsKeyPressed(KEY_W)) keys[11] = 1;
+    if (IsKeyPressed(KEY_S)) keys[12] = 1;
     if (IsKeyPressed(KEY_D) && IsKeyPressed(KEY_Z)) keys[13] = 1;
     if (IsKeyPressed(KEY_D) && IsKeyPressed(KEY_S)) keys[14] = 1;
     if (IsKeyPressed(KEY_Q) && IsKeyPressed(KEY_Z)) keys[15] = 1;
@@ -124,6 +124,12 @@ int args_invalid(int ac, char **av)
     return 0;
 }
 
+void my_memset(int *keys, int i, int z)
+{
+    for (size_t i = 0; i != z; i++)
+        keys[i] = z;
+}
+
 int main(int ac, char **av)
 {
     char **floor_1 = read_map("map/first_floor.txt");
@@ -135,7 +141,7 @@ int main(int ac, char **av)
         return 84;
     InitWindow(atoi(av[1]), atoi(av[2]), "Kidiot");
     SetTargetFPS(atoi(av[3]));
-    for (int keys[18] = {0}; !WindowShouldClose(); memset(keys, 0, 18)) {
+    for (int keys[18] = {0}; !WindowShouldClose(); my_memset(keys, 0, 18)) {
         get_keys(keys);
         game_loop(floor_1, floor_2, players, keys);
         BeginDrawing();
