@@ -68,3 +68,5 @@ void print_keys(int keys[]);
 bool is_obstacle(char obs, entity_t *play, bool baby);
 void move_players_mom(entity_t *play, int keys[]);
 void move_players_baby(entity_t *play, int keys[]);
+
+void draw_map(entity_t *play);
