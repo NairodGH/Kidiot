@@ -72,7 +72,7 @@ int args_invalid(int ac, char **av)
 void my_memset(int *keys, int i, int z)
 {
     for (size_t i = 0; i != z; i++)
-        keys[i] = z;
+        keys[i] = 0;
 }
 
 int main(int ac, char **av)
