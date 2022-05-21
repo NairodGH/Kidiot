@@ -7,7 +7,7 @@
 
 #include "include.h"
 
-static bool move_players_baby_split(char **map, entity_t *play, int keys[])
+static bool move_players_baby_split(char **map, kidiot_t *play, int keys[])
 {
     if (keys[4] == 1 && !(is_obstacle
         (map[(int)play->baby->pos.x - 1][(int)play->baby->pos.y + 1], play, true))) {
@@ -32,7 +32,7 @@ static bool move_players_baby_split(char **map, entity_t *play, int keys[])
     return false;
 }
 
-void move_players_baby(entity_t *play, int keys[])
+void move_players_baby(kidiot_t *play, int keys[])
 {
     char **map = NULL;
 
@@ -56,7 +56,7 @@ void move_players_baby(entity_t *play, int keys[])
         play->baby->pos.x += 1;
 }
 
-static bool move_players_mom_split(char **map, entity_t *play, int keys[])
+static bool move_players_mom_split(char **map, kidiot_t *play, int keys[])
 {
     if (keys[13] == 1 && !(is_obstacle
         (map[(int)play->mom->pos.x - 1][(int)play->mom->pos.y + 1], play, false))) {
@@ -81,7 +81,7 @@ static bool move_players_mom_split(char **map, entity_t *play, int keys[])
     return false;
 }
 
-void move_players_mom(entity_t *play, int keys[])
+void move_players_mom(kidiot_t *play, int keys[])
 {
     char **map = NULL;
 

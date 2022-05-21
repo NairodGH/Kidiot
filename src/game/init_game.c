@@ -60,25 +60,31 @@ tp_t *init_tp(char **first_floor, char **second_floor)
     return tp;
 }
 
-entity_t *init_entity(char **first_floor, char **second_floor)
+kidiot_t *init_kidiot(char **first_floor, char **second_floor)
 {
-    entity_t *entity = malloc(sizeof(entity_t) * 1);
+    kidiot_t *kidiot = malloc(sizeof(kidiot_t) * 1);
     baby_t *baby = malloc(sizeof(baby_t) * 1);
     mom_t *mom = malloc(sizeof(mom_t) * 1);
 
-    if (!entity || !baby || !mom)
+    if (!kidiot || !baby || !mom)
         return NULL;
     baby->floor = 0;
     baby->hp = 100;
     mom->floor = 0;
-    entity->first_floor = first_floor;
-    entity->second_floor = second_floor;
-    baby->pos = find_spawn_pos('b', entity->first_floor);
-    mom->pos = find_spawn_pos('m', entity->first_floor);
-    entity->tp = init_tp(entity->first_floor, entity->second_floor);
-    if (!entity->tp)
+    kidiot->first_floor = first_floor;
+    kidiot->second_floor = second_floor;
+    baby->pos = find_spawn_pos('b', kidiot->first_floor);
+    mom->pos = find_spawn_pos('m', kidiot->first_floor);
+    kidiot->tp = init_tp(kidiot->first_floor, kidiot->second_floor);
+    if (!kidiot->tp)
         return NULL;
-    entity->baby = baby;
-    entity->mom = mom;
-    return entity;
+    kidiot->baby = baby;
+    kidiot->mom = mom;
+    kidiot->textures[0] = LoadTexture("ressources/maggie.png");
+    kidiot->textures[1] = LoadTexture("ressources/marge.png");
+    kidiot->textures[2] = LoadTexture("ressources/misc.png");
+    kidiot->textures[3] = LoadTexture("ressources/electricity.png");
+    for (size_t i = 0; i != 18; i++)
+        kidiot->keys[i] = 0;
+    return kidiot;
 }

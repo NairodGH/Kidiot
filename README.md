@@ -26,14 +26,14 @@ first_floor.txt
 #W     B#M  E  F  E  O#
 #       #             #
 #E     C#             #
-#### ####     T+      #
+#### ####     T++     #
 #       #             #
 #       #             #
 #       #  C       C  #
 #       ####### #######
 #                     #
 #                     #
-### ###      T+mb     #
+### ###      T++mb    #
 #    C#              S#
 #     #               #
 #EV   #               #
@@ -68,11 +68,11 @@ You can modify them as you please but keep the basics in place to not break it:
 As the baby:
 - Bathtub = press once to fill up then stay 4secs in it to drown
 - Cactus = press once to take 10 damage, 5secs cooldown
-- Electric outlet = maintain for 5secs to electrocute
-- Fridge = stay 5secs in it to freeze
-- Microwave = stay 3secs in it to gain a speed boost
-- Oven = stay 3secs in it to take 10 damage per second until you die
-- Vacuum cleaner = vacuums the mom into it for 3secs no matter where she was
+- Electric outlet = stay on it for 5secs to electrocute
+- Fridge = press once to open and stay in it to take 10 damage per second
+- Microwave = press once to open then stay 3secs in it to gain a speed boost
+- Oven = press once to open then stay 3secs in it to take 1 damage per second
+- Vacuum cleaner = press once to vacuum the mom into it for 3secs no matter where she was
 - WC = press once to teleport to the other toilet
 
 As the mom:

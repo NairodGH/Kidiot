@@ -18,38 +18,31 @@
 #include <ctype.h>
 #include "raylib.h"
 
-typedef struct baby_s {
+typedef struct {
     Vector2 pos;
     int floor;
     int hp;
 } baby_t;
 
-typedef struct mom_s {
+typedef struct {
     Vector2 pos;
     int floor;
 } mom_t;
 
-typedef struct tp_s {
+typedef struct {
     Vector2 pos_toilet[2];
     Vector2 pos_stairs[2];
 } tp_t;
 
-typedef struct entity_s {
+typedef struct {
     baby_t *baby;
     mom_t *mom;
     tp_t *tp;
     char **first_floor;
     char **second_floor;
-} entity_t;
-
-typedef struct {
-    Texture2D texture;
-    Vector2 frameSize;
-    int maxFrame;
-    int framesWide;
-    Vector2 origin;
-    int frame;
-} sprite_t;
+    Texture2D textures[4];
+    bool keys[18];
+} kidiot_t;
 
 #define R "\033[1;31m"
 #define G "\033[1;32m"
@@ -60,19 +53,19 @@ typedef struct {
 #define W "\033[1;0m"
 
 char **read_map(char *path);
-bool game_loop(entity_t *play, int keys[]);
+bool game_loop(kidiot_t *play, int keys[]);
 char **get_map(char *str);
 int get_map_size(char **map);
 
 void print_double_tab(char **map);
 void free_double_tab(char **map);
 
-entity_t *init_entity(char **first_floor, char **second_floor);
+kidiot_t *init_kidiot(char **first_floor, char **second_floor);
 Vector2 find_spawn_pos(char cell, char **map);
 void print_keys(int keys[]);
 
-bool is_obstacle(char obs, entity_t *play, bool baby);
-void move_players_mom(entity_t *play, int keys[]);
-void move_players_baby(entity_t *play, int keys[]);
+bool is_obstacle(char obs, kidiot_t *play, bool baby);
+void move_players_mom(kidiot_t *play, int keys[]);
+void move_players_baby(kidiot_t *play, int keys[]);
 
-void draw_map(entity_t *play);
+void draw_map(kidiot_t *play);

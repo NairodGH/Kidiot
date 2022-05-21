@@ -62,32 +62,33 @@ int main(int ac, char **av)
 {
     int save_hp = 0;
     char *buffer = NULL;
-    entity_t *players = init_entity(read_map("map/first_floor.txt"), read_map("map/second_floor.txt"));
+    kidiot_t *kidiot;
     
     SetTraceLogLevel(LOG_NONE);
     if (args_invalid(ac, av))
         return 84;
     InitWindow(atoi(av[1]), atoi(av[2]), "Kidiot");
+    kidiot = init_kidiot(read_map("map/first_floor.txt"), read_map("map/second_floor.txt"));
     SetTargetFPS(atoi(av[3]));
-    asprintf(&buffer, "baby hp = %d", players->baby->hp);
-    save_hp = players->baby->hp;
+    asprintf(&buffer, "baby hp = %d", kidiot->baby->hp);
+    save_hp = kidiot->baby->hp;
     for (int keys[18] = {0}; !WindowShouldClose(); my_memset(keys, 0, 18)) {
         get_keys(keys);
-        if (game_loop(players, keys))
+        if (game_loop(kidiot, keys))
             break;
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        draw_map(players);
-        if (players->baby->hp != save_hp) {
+        draw_map(kidiot);
+        if (kidiot->baby->hp != save_hp) {
             free(buffer);
-            asprintf(&buffer, "baby hp = %d", players->baby->hp);
+            asprintf(&buffer, "baby hp = %d", kidiot->baby->hp);
         }
         DrawText(buffer, 10, 5, 20, LIGHTGRAY);
         EndDrawing();
     }
-    free_double_tab(players->first_floor);
-    free_double_tab(players->second_floor);
-    free(players);
+    free_double_tab(kidiot->first_floor);
+    free_double_tab(kidiot->second_floor);
+    free(kidiot);
     CloseWindow();
     return 0;
 }

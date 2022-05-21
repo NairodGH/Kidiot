@@ -7,25 +7,33 @@
 
 #include "include.h"
 
-void my_draw_color(char cell, Vector2 pos, Vector2 size_rect)
+void my_draw_color(char cell, Vector2 pos, Vector2 size_rect, Texture2D textures[4])
 {
     if (cell == 'E')
         DrawRectangleV(pos, size_rect, GREEN);
     if (cell == '#')
         DrawRectangleV(pos, size_rect, BLACK);
     if (cell == 'C')
-        DrawRectangleV(pos, size_rect, DARKGREEN);
+        DrawTextureRec(textures[2], (Rectangle){731, 0, 73, 57}, pos, RAYWHITE);
     if (cell == 'B')
-        DrawRectangleV(pos, size_rect, BLUE);
+        DrawTextureRec(textures[2], (Rectangle){366, 0, 73, 57}, pos, RAYWHITE);
     if (cell == 'W')
-        DrawRectangleV(pos, size_rect, DARKBLUE);
+        DrawTextureRec(textures[2], (Rectangle){585, 0, 73, 57}, pos, RAYWHITE);
     if (cell == 'F')
-        DrawTextureRec(LoadTexture("ressources/misc.png"), (Rectangle){74, 0, 73, 57}, pos, RAYWHITE);
+        DrawTextureRec(textures[2], (Rectangle){74, 0, 73, 57}, pos, RAYWHITE);
     if (cell == 'T')
-        DrawTextureRec(LoadTexture("ressources/misc.png"), (Rectangle){0, 0, 73, 57}, pos, RAYWHITE);
+        DrawTextureRec(textures[2], (Rectangle){0, 0, 73, 57}, pos, RAYWHITE);
+    if (cell == 'V')
+        DrawTextureRec(textures[2], (Rectangle){439, 0, 73, 57}, pos, RAYWHITE);
+    if (cell == 'Z')
+        DrawTextureRec(textures[2], (Rectangle){804, 0, 73, 57}, pos, RAYWHITE);
+    if (cell == 'O')
+        DrawTextureRec(textures[2], (Rectangle){220, 0, 73, 57}, pos, RAYWHITE);
+    if (cell == 'M')
+        DrawTextureRec(textures[2], (Rectangle){147, 0, 73, 57}, pos, RAYWHITE);
 }
 
-void draw_second_map(entity_t *play, int wd, int hg)
+void draw_second_map(kidiot_t *play, int wd, int hg)
 {
     Vector2 pos_s = {(wd / 2), 0};
     Vector2 size_rect_s =
@@ -37,7 +45,7 @@ void draw_second_map(entity_t *play, int wd, int hg)
 
     for (size_t x  = 0; play->second_floor[x] != NULL; x++) {
         for (size_t y = 0; play->second_floor[x][y] != '\0'; y++) {
-            my_draw_color(play->second_floor[x][y], pos_s, size_rect_s);
+            my_draw_color(play->second_floor[x][y], pos_s, size_rect_s, play->textures);
             pos_s.x += wd / strlen(play->second_floor[x]) / 2;
         }
         pos_s.x = (wd / 2);
@@ -53,7 +61,7 @@ void draw_second_map(entity_t *play, int wd, int hg)
     }
 }
 
-void draw_map(entity_t *play)
+void draw_map(kidiot_t *play)
 {
     int hg = GetScreenHeight();
     int wd = GetScreenWidth();
@@ -66,7 +74,7 @@ void draw_map(entity_t *play)
 
     for (size_t x = 0; play->first_floor[x] != NULL; x++) {
         for (size_t y = 0; play->first_floor[x][y] != '\0'; y++) {
-            my_draw_color(play->first_floor[x][y], pos, size_rect);
+            my_draw_color(play->first_floor[x][y], pos, size_rect, play->textures);
             pos.x += wd / strlen(play->first_floor[x]) / 2;
         }
         pos.x = 0;

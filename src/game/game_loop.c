@@ -7,7 +7,7 @@
 
 #include "include.h"
 
-static bool check_death(entity_t *player)
+static bool check_death(kidiot_t *player)
 {
     char **map = NULL;
 
@@ -24,7 +24,7 @@ static bool check_death(entity_t *player)
     return false;
 }
 
-bool is_obstacle(char obs, entity_t *play, bool baby)
+bool is_obstacle(char obs, kidiot_t *play, bool baby)
 {
     if (obs == '#' || obs == 'T' || obs == 'Z' || obs == '+')
         return true;
@@ -73,7 +73,7 @@ void print_keys(int keys[])
     printf("\n");
 }
 
-bool game_loop(entity_t *play, int keys[])
+bool game_loop(kidiot_t *play, int keys[])
 {
     move_players_baby(play, keys);
     move_players_mom(play, keys);
