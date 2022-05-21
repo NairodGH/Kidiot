@@ -47,6 +47,19 @@ char **read_map(char *path)
     return (map);
 }
 
+tp_t *init_tp(char **first_floor, char **second_floor)
+{
+    tp_t *tp = malloc(sizeof(tp_t) * 1);
+
+    if (!tp)
+        return NULL;
+    tp->pos_stairs[0] = find_spawn_pos('S', first_floor);
+    tp->pos_stairs[1] = find_spawn_pos('S', second_floor);
+    tp->pos_toilet[0] = find_spawn_pos('W', first_floor);
+    tp->pos_toilet[1] = find_spawn_pos('W', second_floor);
+    return tp;
+}
+
 entity_t *init_entity(char **first_floor, char **second_floor)
 {
     entity_t *entity = malloc(sizeof(entity_t) * 1);
@@ -62,6 +75,9 @@ entity_t *init_entity(char **first_floor, char **second_floor)
     entity->second_floor = second_floor;
     baby->pos = find_spawn_pos('b', entity->first_floor);
     mom->pos = find_spawn_pos('m', entity->first_floor);
+    entity->tp = init_tp(entity->first_floor, entity->second_floor);
+    if (!entity->tp)
+        return NULL;
     entity->baby = baby;
     entity->mom = mom;
     return entity;

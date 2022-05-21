@@ -29,9 +29,15 @@ typedef struct mom_s {
     int floor;
 } mom_t;
 
+typedef struct tp_s {
+    Vector2 pos_toilet[2];
+    Vector2 pos_stairs[2];
+} tp_t;
+
 typedef struct entity_s {
     baby_t *baby;
     mom_t *mom;
+    tp_t *tp;
     char **first_floor;
     char **second_floor;
 } entity_t;

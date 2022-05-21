@@ -30,11 +30,11 @@ bool is_obstacle(char obs, entity_t *play, bool baby)
         return true;
     if (obs == 'W' && baby) {
         if (play->baby->floor == 0) {
-            play->baby->pos = find_spawn_pos('W', play->second_floor);
+            play->baby->pos = play->tp->pos_toilet[1];
             play->baby->floor = 1;
         }
         else {
-            play->baby->pos = find_spawn_pos('W', play->first_floor);
+            play->baby->pos = play->tp->pos_toilet[0];
             play->baby->floor = 0;
         }
         return true;
@@ -42,21 +42,21 @@ bool is_obstacle(char obs, entity_t *play, bool baby)
     if (obs == 'S') {
         if (baby) {
             if (play->baby->floor == 0) {
-                play->baby->pos = find_spawn_pos('S', play->second_floor);
+                play->baby->pos = play->tp->pos_stairs[1];
                 play->baby->floor = 1;
             }
             else {
-                play->baby->pos = find_spawn_pos('S', play->first_floor);
+                play->baby->pos = play->tp->pos_stairs[0];
                 play->baby->floor = 0;
             }
         }
         else {
             if (play->mom->floor == 0) {
-                play->mom->pos = find_spawn_pos('S', play->second_floor);
+                play->mom->pos = play->tp->pos_stairs[1];
                 play->mom->floor = 1;
             }
             else {
-                play->mom->pos = find_spawn_pos('S', play->first_floor);
+                play->mom->pos = play->tp->pos_stairs[0];
                 play->mom->floor = 0;
             }
         }

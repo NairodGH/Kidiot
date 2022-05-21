@@ -60,16 +60,17 @@ void my_memset(int *keys, int i, int z)
 
 int main(int ac, char **av)
 {
-    char **floor_1 = read_map("map/first_floor.txt");
-    char **floor_2 = read_map("map/second_floor.txt");
+    int save_hp = 0;
     char *buffer = NULL;
-    entity_t *players = init_entity(floor_1, floor_2);
+    entity_t *players = init_entity(read_map("map/first_floor.txt"), read_map("map/second_floor.txt"));
     
     SetTraceLogLevel(LOG_NONE);
     if (args_invalid(ac, av))
         return 84;
     InitWindow(atoi(av[1]), atoi(av[2]), "Kidiot");
     SetTargetFPS(atoi(av[3]));
+    asprintf(&buffer, "baby hp = %d", players->baby->hp);
+    save_hp = players->baby->hp;
     for (int keys[18] = {0}; !WindowShouldClose(); my_memset(keys, 0, 18)) {
         get_keys(keys);
         if (game_loop(players, keys))
@@ -77,13 +78,15 @@ int main(int ac, char **av)
         BeginDrawing();
         ClearBackground(RAYWHITE);
         draw_map(players);
-        asprintf(&buffer, "baby hp = %d", players->baby->hp);
+        if (players->baby->hp != save_hp) {
+            free(buffer);
+            asprintf(&buffer, "baby hp = %d", players->baby->hp);
+        }
         DrawText(buffer, 10, 5, 20, LIGHTGRAY);
         EndDrawing();
-        free(buffer);
     }
-    free_double_tab(floor_1);
-    free_double_tab(floor_2);
+    free_double_tab(players->first_floor);
+    free_double_tab(players->second_floor);
     free(players);
     CloseWindow();
     return 0;
