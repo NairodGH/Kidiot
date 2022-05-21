@@ -136,6 +136,7 @@ int main(int ac, char **av)
 {
     char **floor_1 = read_map("map/first_floor.txt");
     char **floor_2 = read_map("map/second_floor.txt");
+    char *buffer = NULL;
     entity_t *players = init_entity(floor_1, floor_2);
     
     SetTraceLogLevel(LOG_NONE);
@@ -145,11 +146,15 @@ int main(int ac, char **av)
     SetTargetFPS(atoi(av[3]));
     for (int keys[18] = {0}; !WindowShouldClose(); my_memset(keys, 0, 18)) {
         get_keys(keys);
-        game_loop(players, keys);
+        if (game_loop(players, keys))
+            break;
         BeginDrawing();
         ClearBackground(RAYWHITE);
         draw_map(players);
+        asprintf(&buffer, "baby hp = %d", players->baby->hp);
+        DrawText(buffer, 10, 5, 20, LIGHTGRAY);
         EndDrawing();
+        free(buffer);
     }
     free_double_tab(floor_1);
     free_double_tab(floor_2);

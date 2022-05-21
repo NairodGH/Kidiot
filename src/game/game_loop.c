@@ -26,7 +26,7 @@ static bool check_death(entity_t *player)
 
 bool is_obstacle(char obs, entity_t *play, bool baby)
 {
-    if (obs == '#' || obs == 'T' || obs == 'Z')
+    if (obs == '#' || obs == 'T' || obs == 'Z' || obs == '+')
         return true;
     if (obs == 'W' && baby) {
         if (play->baby->floor == 0) {
