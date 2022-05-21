@@ -17,10 +17,20 @@
 #include <ctype.h>
 #include "raylib.h"
 
-typedef struct {
+typedef struct baby_s {
     Vector2 pos;
     int floor;
     int hp;
+} baby_t;
+
+typedef struct mom_s {
+    Vector2 pos;
+    int floor;
+} mom_t;
+
+typedef struct entity_s {
+    baby_t *baby;
+    mom_t *mom;
 } entity_t;
 
 typedef struct {
@@ -48,4 +58,11 @@ int get_map_size(char **map);
 void print_double_tab(char **map);
 void free_double_tab(char **map);
 
-entity_t *init_entity();
+entity_t *init_entity(char **map);
+Vector2 find_spawn_pos(char cell, char **map);
+
+bool is_obstacle(char obs, entity_t *play);
+void move_players_mom(char **floor_1, char **floor_2,
+    entity_t *play, int keys[]);
+void move_players_baby(char **floor_1, char **floor_2,
+    entity_t *play, int keys[]);

@@ -26,6 +26,7 @@ set(SRC
   src/game/init_game.c
   src/game/map_utils.c
   src/game/game_loop.c
+  src/game/move_players.c
 )
 
 set(CMAKE_EXE_LINKER_FLAGS -fexceptions)

@@ -47,19 +47,20 @@ char **read_map(char *path)
     return (map);
 }
 
-entity_t *init_entity()
+entity_t *init_entity(char **map)
 {
-    entity_t *entity = malloc(sizeof(entity_t) * 2);
+    entity_t *entity = malloc(sizeof(entity_t) * 1);
+    baby_t *baby = malloc(sizeof(baby_t) * 1);
+    mom_t *mom = malloc(sizeof(mom_t) * 1);
 
-    if (!entity)
+    if (!entity || !baby || !mom)
         return NULL;
-    entity[0].pos.x = 3;
-    entity[0].pos.y = 3;
-    entity[1].pos.x = 7;
-    entity[1].pos.y = 7;
-    entity[0].floor = 0;
-    entity[1].floor = 1;
-    entity[0].hp = 100;
-    entity[1].hp = -1;
+    baby->floor = 0;
+    baby->hp = 100;
+    mom->floor = 0;
+    baby->pos = find_spawn_pos('b', map);
+    mom->pos = find_spawn_pos('m', map);
+    entity->baby = baby;
+    entity->mom = mom;
     return entity;
 }

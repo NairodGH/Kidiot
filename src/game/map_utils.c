@@ -7,6 +7,21 @@
 
 #include "include.h"
 
+Vector2 find_spawn_pos(char cell, char **map)
+{
+    Vector2 ret = {0, 0};
+
+    for (size_t x = 0; map[x] != NULL; x++) {
+        for (size_t y = 0; map[x][y] != '\0'; y++) {
+            if (map[x][y] == cell) {
+                ret.x = x;
+                ret.y = y;
+                return (ret);
+            }
+        }
+    }
+}
+
 int get_map_size(char **map)
 {
     int ret = 0;
