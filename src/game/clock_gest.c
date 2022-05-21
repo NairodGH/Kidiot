@@ -21,8 +21,8 @@ static void check_oven(kidiot_t *players, char **map, float time)
 
 void gest_clock(kidiot_t *players)
 {
-    char **map =
-        players->baby->floor == 0 ? players->first_floor : players->second_floor;
+    char **map = players->baby->floor == 0 ?
+        players->first_floor : players->second_floor;
     float time = GetFrameTime();
 
     if (players->baby->cactus->time > 0)

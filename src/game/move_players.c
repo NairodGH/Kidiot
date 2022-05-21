@@ -7,28 +7,24 @@
 
 #include "include.h"
 
-static bool move_players_baby_split(char **map, kidiot_t *play, int keys[])
+bool check_speed(kidiot_t *play, int keys[], bool baby)
 {
-    if (keys[4] == 1 && !(is_obstacle
-        (map[(int)play->baby->pos.x - 1][(int)play->baby->pos.y + 1], play, true))) {
-        play->baby->pos.x -= 1, play->baby->pos.y += 1;
+    Vector2 *pos = (baby ? &play->baby->temp_pos : &play->mom->temp_pos);
+    float speed = (baby ? play->baby->speed : play->mom->speed);
+    int save_y = pos->y;
+    int save_x = pos->x;
+    int i = (baby ? 0 : 5);
+
+    if (keys[0 + i] == 1)
+        pos->y += speed;
+    if (keys[1 + i] == 1)
+        pos->y -= speed;
+    if (keys[2 + i] == 1)
+        pos->x -= speed;
+    if (keys[3 + i] == 1)
+        pos->x += speed;
+    if (save_y != (int)pos->y || save_x != (int)pos->x)
         return true;
-    }
-    if (keys[5] == 1 && !(is_obstacle
-        (map[(int)play->baby->pos.x + 1][(int)play->baby->pos.y + 1], play, true))) {
-        play->baby->pos.x += 1, play->baby->pos.y += 1;
-        return true;
-    }
-    if (keys[6] == 1 && !(is_obstacle
-        (map[(int)play->baby->pos.x - 1][(int)play->baby->pos.y - 1], play, true))) {
-        play->baby->pos.x -= 1, play->baby->pos.y -= 1;
-        return true;
-    }
-    if (keys[7] == 1 && !(is_obstacle
-        (map[(int)play->baby->pos.x + 1][(int)play->baby->pos.y - 1], play, true))) {
-        play->baby->pos.x += 1, play->baby->pos.y -= 1;
-        return true;
-    }
     return false;
 }
 
@@ -36,71 +32,40 @@ void move_players_baby(kidiot_t *play, int keys[])
 {
     char **map = NULL;
 
-    if (play->baby->floor == 0)
-        map = play->first_floor;
-    else
-        map = play->second_floor;
-    if (move_players_baby_split(map, play, keys))
+    if (!check_speed(play, keys, true))
         return;
+    map = play->baby->floor == 0 ? play->first_floor : play->second_floor;
     if (keys[0] == 1 && !(is_obstacle
-        (map[(int)play->baby->pos.x][(int)play->baby->pos.y + 1], play, true)))
+        (map[(int)play->baby->pos.x][(int)(play->baby->pos.y + 1)], play, 1)))
         play->baby->pos.y += 1;
     if (keys[1] == 1 && !(is_obstacle
-        (map[(int)play->baby->pos.x][(int)play->baby->pos.y - 1], play, true)))
+        (map[(int)play->baby->pos.x][(int)(play->baby->pos.y - 1)], play, 1)))
         play->baby->pos.y -= 1;
     if (keys[2] == 1 && !(is_obstacle
-        (map[(int)play->baby->pos.x - 1][(int)play->baby->pos.y], play, true)))
+        (map[(int)(play->baby->pos.x - 1)][(int)play->baby->pos.y], play, 1)))
         play->baby->pos.x -= 1;
     if (keys[3] == 1 && !(is_obstacle
-        (map[(int)play->baby->pos.x + 1][(int)play->baby->pos.y], play, true)))
+        (map[(int)(play->baby->pos.x + 1)][(int)play->baby->pos.y], play, 1)))
         play->baby->pos.x += 1;
-}
-
-static bool move_players_mom_split(char **map, kidiot_t *play, int keys[])
-{
-    if (keys[13] == 1 && !(is_obstacle
-        (map[(int)play->mom->pos.x - 1][(int)play->mom->pos.y + 1], play, false))) {
-        play->mom->pos.x -= 1, play->mom->pos.y += 1;
-        return true;
-    }
-    if (keys[14] == 1 && !(is_obstacle
-        (map[(int)play->mom->pos.x + 1][(int)play->mom->pos.y + 1], play, false))) {
-        play->mom->pos.x += 1, play->mom->pos.y += 1;
-        return true;
-    }
-    if (keys[15] == 1 && !(is_obstacle
-        (map[(int)play->mom->pos.x - 1][(int)play->mom->pos.y - 1], play, false))) {
-        play->mom->pos.x -= 1, play->mom->pos.y -= 1;
-        return true;
-    }
-    if (keys[16] == 1 && !(is_obstacle
-        (map[(int)play->mom->pos.x + 1][(int)play->mom->pos.y - 1], play, false))) {
-        play->mom->pos.x += 1, play->mom->pos.y -= 1;
-        return true;
-    }
-    return false;
 }
 
 void move_players_mom(kidiot_t *play, int keys[])
 {
     char **map = NULL;
 
-    if (play->mom->floor == 0)
-        map = play->first_floor;
-    else
-        map = play->second_floor;
-    if (move_players_mom_split(map, play, keys))
+    if (!check_speed(play, keys, false))
         return;
-    if (keys[9] == 1 && !(is_obstacle
+    map = play->baby->floor == 0 ? play->first_floor : play->second_floor;
+    if (keys[5] == 1 && !(is_obstacle
         (map[(int)play->mom->pos.x][(int)play->mom->pos.y + 1], play, false)))
         play->mom->pos.y += 1;
-    if (keys[10] == 1 && !(is_obstacle
+    if (keys[6] == 1 && !(is_obstacle
         (map[(int)play->mom->pos.x][(int)play->mom->pos.y - 1], play, false)))
         play->mom->pos.y -= 1;
-    if (keys[11] == 1 && !(is_obstacle
+    if (keys[7] == 1 && !(is_obstacle
         (map[(int)play->mom->pos.x - 1][(int)play->mom->pos.y], play, false)))
         play->mom->pos.x -= 1;
-    if (keys[12] == 1 && !(is_obstacle
+    if (keys[8] == 1 && !(is_obstacle
         (map[(int)play->mom->pos.x + 1][(int)play->mom->pos.y], play, false)))
         play->mom->pos.x += 1;
 }

@@ -26,24 +26,16 @@ void free_everything(kidiot_t *kidiot, char *buffer)
 
 static void get_keys(int *keys)
 {
-    if (IsKeyPressed(KEY_RIGHT)) keys[0] = 1;
-    if (IsKeyPressed(KEY_LEFT)) keys[1] = 1;
-    if (IsKeyPressed(KEY_UP)) keys[2] = 1;
-    if (IsKeyPressed(KEY_DOWN)) keys[3] = 1;
-    if (IsKeyPressed(KEY_RIGHT) && IsKeyPressed(KEY_UP)) keys[4] = 1;
-    if (IsKeyPressed(KEY_RIGHT) && IsKeyPressed(KEY_DOWN)) keys[5] = 1;
-    if (IsKeyPressed(KEY_LEFT) && IsKeyPressed(KEY_UP)) keys[6] = 1;
-    if (IsKeyPressed(KEY_LEFT) && IsKeyPressed(KEY_DOWN)) keys[7] = 1;
-    if (IsKeyPressed(KEY_ENTER)) keys[8];
-    if (IsKeyPressed(KEY_D)) keys[9] = 1;
-    if (IsKeyPressed(KEY_A)) keys[10] = 1;
-    if (IsKeyPressed(KEY_W)) keys[11] = 1;
-    if (IsKeyPressed(KEY_S)) keys[12] = 1;
-    if (IsKeyPressed(KEY_D) && IsKeyPressed(KEY_Z)) keys[13] = 1;
-    if (IsKeyPressed(KEY_D) && IsKeyPressed(KEY_S)) keys[14] = 1;
-    if (IsKeyPressed(KEY_Q) && IsKeyPressed(KEY_Z)) keys[15] = 1;
-    if (IsKeyPressed(KEY_Q) && IsKeyPressed(KEY_S)) keys[16] = 1;
-    if (IsKeyPressed(KEY_SPACE)) keys[17] = 1;
+    if (IsKeyDown(KEY_RIGHT)) keys[0] = 1;
+    if (IsKeyDown(KEY_LEFT)) keys[1] = 1;
+    if (IsKeyDown(KEY_UP)) keys[2] = 1;
+    if (IsKeyDown(KEY_DOWN)) keys[3] = 1;
+    if (IsKeyDown(KEY_ENTER)) keys[4];
+    if (IsKeyDown(KEY_D)) keys[5] = 1;
+    if (IsKeyDown(KEY_A)) keys[6] = 1;
+    if (IsKeyDown(KEY_W)) keys[7] = 1;
+    if (IsKeyDown(KEY_S)) keys[8] = 1;
+    if (IsKeyDown(KEY_SPACE)) keys[9] = 1;
 }
 
 int args_invalid(int ac, char **av)
@@ -75,6 +67,29 @@ void my_memset(int *keys, int i, int z)
         keys[i] = z;
 }
 
+void main_loop(kidiot_t *kidiot, char **buffer)
+{
+    int save_hp = kidiot->baby->hp;
+
+    for (int keys[10] = {0}; !WindowShouldClose();) {
+        get_keys(keys);
+        if (game_loop(kidiot, keys))
+            break;
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        draw_map(kidiot);
+        if (kidiot->baby->hp != save_hp) {
+            free(*buffer);
+            asprintf(buffer, "baby hp = %d", kidiot->baby->hp);
+        }
+        DrawText(*buffer, 10, 5, 20, LIGHTGRAY);
+        EndDrawing();
+        gest_clock(kidiot);
+        for (size_t i = 0; i != 10; i++)
+            keys[i] = 0;
+    }
+}
+
 int main(int ac, char **av)
 {
     int save_hp = 0;
@@ -88,22 +103,7 @@ int main(int ac, char **av)
     kidiot = init_kidiot(read_map("map/first_floor.txt"), read_map("map/second_floor.txt"));
     SetTargetFPS(atoi(av[3]));
     asprintf(&buffer, "baby hp = %d", kidiot->baby->hp);
-    save_hp = kidiot->baby->hp;
-    for (int keys[18] = {0}; !WindowShouldClose(); my_memset(keys, 0, 18)) {
-        get_keys(keys);
-        if (game_loop(kidiot, keys))
-            break;
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-        draw_map(kidiot);
-        if (kidiot->baby->hp != save_hp) {
-            free(buffer);
-            asprintf(&buffer, "baby hp = %d", kidiot->baby->hp);
-        }
-        DrawText(buffer, 10, 5, 20, LIGHTGRAY);
-        EndDrawing();
-        gest_clock(kidiot);
-    }
+    main_loop(kidiot, &buffer);
     free_everything(kidiot, buffer);
     CloseWindow();
     return 0;
