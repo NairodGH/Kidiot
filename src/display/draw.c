@@ -93,6 +93,7 @@ void draw_map(kidiot_t *play)
     draw_second_map(play, wd, hg);
     if (play->baby->floor == 0)
         draw_baby(play, baby_play);
-    if (play->mom->floor == 0)
+    if (play->mom->floor == 0) {
         draw_mom(play, mom_play);
+    }
 }

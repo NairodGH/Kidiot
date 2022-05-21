@@ -55,7 +55,7 @@ void move_players_mom(kidiot_t *play, int keys[])
 
     if (!check_speed(play, keys, false))
         return;
-    map = play->baby->floor == 0 ? play->first_floor : play->second_floor;
+    map = ((play->mom->floor == 0) ? play->first_floor : play->second_floor);
     if (keys[5] == 1 && !(is_obstacle
         (map[(int)play->mom->pos.x][(int)play->mom->pos.y + 1], play, false)))
         play->mom->pos.y += 1;
