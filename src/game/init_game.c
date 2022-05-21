@@ -87,6 +87,7 @@ void init_obs(baby_t *baby)
     baby->bathtub = bathtub;
     baby->electric = electric;
     baby->oven = oven;
+    baby->speed = 0.1;
 }
 
 kidiot_t *init_kidiot(char **first_floor, char **second_floor)
@@ -99,10 +100,13 @@ kidiot_t *init_kidiot(char **first_floor, char **second_floor)
         return NULL;
     init_obs(baby);
     mom->floor = 0;
+    mom->speed = 0.1;
     kidiot->first_floor = first_floor;
     kidiot->second_floor = second_floor;
     baby->pos = find_spawn_pos('b', kidiot->first_floor);
     mom->pos = find_spawn_pos('m', kidiot->first_floor);
+    baby->temp_pos = baby->pos;
+    mom->temp_pos = mom->pos;
     kidiot->tp = init_tp(kidiot->first_floor, kidiot->second_floor);
     if (!kidiot->tp)
         return NULL;

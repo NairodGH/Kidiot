@@ -47,8 +47,10 @@ typedef struct {
 
 typedef struct baby_s {
     Vector2 pos;
+    Vector2 temp_pos;
     int floor;
     int hp;
+    float speed;
     cactus_t *cactus;
     frigde_t *fridge;
     bathtub_t *bathtub;
@@ -58,6 +60,8 @@ typedef struct baby_s {
 
 typedef struct {
     Vector2 pos;
+    Vector2 temp_pos;
+    float speed;
     int floor;
 } mom_t;
 

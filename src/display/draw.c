@@ -40,9 +40,9 @@ void draw_baby(kidiot_t *kidiot, Vector2 pos)
 
 void draw_mom(kidiot_t *kidiot, Vector2 pos)
 {
-    if (kidiot->keys[12])
+    if (kidiot->keys[8])
         return DrawTextureRec(kidiot->textures[1],
-        (Rectangle){16, 4 + (int)GetTime() % 3 * 58, 21, 58}, pos, RAYWHITE);
+        (Rectangle){15, 4 + (int)GetTime() % 3 * 62, 22, 59}, pos, RAYWHITE);
     DrawTextureRec(kidiot->textures[1], (Rectangle){18, 65, 17, 59}, pos, RAYWHITE);
 }
 
@@ -96,6 +96,7 @@ void draw_map(kidiot_t *play)
     draw_second_map(play, wd, hg);
     if (play->baby->floor == 0)
         draw_baby(play, baby_play);
-    if (play->mom->floor == 0)
+    if (play->mom->floor == 0) {
         draw_mom(play, mom_play);
+    }
 }
