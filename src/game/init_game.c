@@ -60,6 +60,35 @@ tp_t *init_tp(char **first_floor, char **second_floor)
     return tp;
 }
 
+void init_obs(baby_t *baby)
+{
+    frigde_t *frigde = malloc(sizeof(frigde_t) * 1);
+    cactus_t *cactus = malloc(sizeof(cactus_t) * 1);
+    bathtub_t *bathtub = malloc(sizeof(bathtub_t) * 1);
+    electric_t *electric = malloc(sizeof(electric_t) * 1);
+    oven_t *oven = malloc(sizeof(oven_t) * 1);
+
+    cactus->is_cut = false;
+    cactus->time = 0;
+    frigde->is_open = false;
+    frigde->time = 0;
+    bathtub->is_open = false;
+    bathtub->time = 4;
+    electric->is_fixed = false;
+    electric->time = 5;
+    oven->is_open = false;
+    oven->is_burning = false;
+    oven->time = 3;
+    oven->time_burn = 1;
+    baby->floor = 0;
+    baby->hp = 100;
+    baby->cactus = cactus;
+    baby->fridge = frigde;
+    baby->bathtub = bathtub;
+    baby->electric = electric;
+    baby->oven = oven;
+}
+
 kidiot_t *init_kidiot(char **first_floor, char **second_floor)
 {
     kidiot_t *kidiot = malloc(sizeof(kidiot_t) * 1);
@@ -68,8 +97,7 @@ kidiot_t *init_kidiot(char **first_floor, char **second_floor)
 
     if (!kidiot || !baby || !mom)
         return NULL;
-    baby->floor = 0;
-    baby->hp = 100;
+    init_obs(baby);
     mom->floor = 0;
     kidiot->first_floor = first_floor;
     kidiot->second_floor = second_floor;

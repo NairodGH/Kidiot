@@ -85,6 +85,7 @@ int main(int ac, char **av)
         }
         DrawText(buffer, 10, 5, 20, LIGHTGRAY);
         EndDrawing();
+        gest_clock(kidiot);
     }
     free_double_tab(kidiot->first_floor);
     free_double_tab(kidiot->second_floor);

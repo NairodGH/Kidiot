@@ -19,9 +19,41 @@
 #include "raylib.h"
 
 typedef struct {
+    bool is_cut;
+    float time;
+} cactus_t;
+
+typedef struct {
+    bool is_open;
+    bool is_burning;
+    float time;
+    float time_burn;
+} oven_t;
+
+typedef struct {
+    bool is_open;
+    float time;
+} bathtub_t;
+
+typedef struct {
+    bool is_fixed;
+    float time;
+} electric_t;
+
+typedef struct {
+    bool is_open;
+    float time;
+} frigde_t;
+
+typedef struct baby_s {
     Vector2 pos;
     int floor;
     int hp;
+    cactus_t *cactus;
+    frigde_t *fridge;
+    bathtub_t *bathtub;
+    electric_t *electric;
+    oven_t *oven;
 } baby_t;
 
 typedef struct {
@@ -31,6 +63,7 @@ typedef struct {
 
 typedef struct {
     Vector2 pos_toilet[2];
+    float time;
     Vector2 pos_stairs[2];
 } tp_t;
 
@@ -69,3 +102,5 @@ void move_players_mom(kidiot_t *play, int keys[]);
 void move_players_baby(kidiot_t *play, int keys[]);
 
 void draw_map(kidiot_t *play);
+
+void gest_clock(kidiot_t *players);

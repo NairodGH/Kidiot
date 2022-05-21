@@ -7,20 +7,60 @@
 
 #include "include.h"
 
+static void split_check_death(kidiot_t *player, char **map)
+{
+    if (player->baby->oven->is_burning && player->baby->oven->time_burn < 0) {
+        player->baby->hp -= 10;
+        player->baby->oven->time_burn = 1;
+    }
+    if (map[(int)player->baby->pos.x][(int)player->baby->pos.y] == 'F' && 
+        player->baby->fridge->time <= 0 && !player->baby->fridge->is_open) {
+        player->baby->hp -= 20;
+        player->baby->fridge->time = 5;
+    }
+    if (map[(int)player->baby->pos.x][(int)player->baby->pos.y] == 'C' && 
+        player->baby->cactus->time <= 0 && !player->baby->cactus->is_cut) {
+        player->baby->hp -= 10;
+        player->baby->cactus->time = 3;
+    }
+}
+
 static bool check_death(kidiot_t *player)
 {
-    char **map = NULL;
+    char **map = player->baby->floor == 0
+        ? player->first_floor : player->second_floor;
 
-    if (player->baby->floor == 0)
-        map = player->first_floor;
-    else
-        map = player->second_floor;
-    if (map[(int)player->baby->pos.x][(int)player->baby->pos.y] == 'C' ||
-        map[(int)player->baby->pos.x][(int)player->baby->pos.y] == 'O' ||
-        map[(int)player->baby->pos.x][(int)player->baby->pos.y]  == 'F')
-        player->baby->hp -= 10;
+    if (player->baby->bathtub->time <= 0)
+        return true;
+    if (player->baby->electric->time <= 0)
+        return true;
+    split_check_death(player, map);
     if (player->baby->hp <= 0)
         return true;
+    return false;
+}
+
+static bool split_is_obstacle(char obs, kidiot_t *play, bool baby)
+{
+    if (obs == 'S') {
+        if (baby) {
+            if (play->baby->floor == 0)
+                play->baby->pos = play->tp->pos_stairs[1];
+            else
+                play->baby->pos = play->tp->pos_stairs[0];
+            play->baby->floor ==
+                0 ? (play->baby->floor = 1) : (play->baby->floor = 0);
+        }
+        else {
+            if (play->mom->floor == 0)
+                play->mom->pos = play->tp->pos_stairs[1];
+            else
+                play->mom->pos = play->tp->pos_stairs[0];
+            play->mom->floor ==
+                0 ? (play->mom->floor = 1) : (play->mom->floor = 0);
+        }
+        return true;
+    }
     return false;
 }
 
@@ -29,48 +69,15 @@ bool is_obstacle(char obs, kidiot_t *play, bool baby)
     if (obs == '#' || obs == 'T' || obs == 'Z' || obs == '+')
         return true;
     if (obs == 'W' && baby) {
-        if (play->baby->floor == 0) {
+        if (play->baby->floor == 0)
             play->baby->pos = play->tp->pos_toilet[1];
-            play->baby->floor = 1;
-        }
-        else {
+        else
             play->baby->pos = play->tp->pos_toilet[0];
-            play->baby->floor = 0;
-        }
+        play->baby->floor ==
+            0 ? (play->baby->floor = 1) : (play->baby->floor = 0);
         return true;
     }
-    if (obs == 'S') {
-        if (baby) {
-            if (play->baby->floor == 0) {
-                play->baby->pos = play->tp->pos_stairs[1];
-                play->baby->floor = 1;
-            }
-            else {
-                play->baby->pos = play->tp->pos_stairs[0];
-                play->baby->floor = 0;
-            }
-        }
-        else {
-            if (play->mom->floor == 0) {
-                play->mom->pos = play->tp->pos_stairs[1];
-                play->mom->floor = 1;
-            }
-            else {
-                play->mom->pos = play->tp->pos_stairs[0];
-                play->mom->floor = 0;
-            }
-        }
-        return true;
-    }
-    return false;
-}
-
-void print_keys(int keys[])
-{
-    for (size_t i = 0; i != 18; i++) {
-        printf("i: %d re: %d ", i, keys[i]);
-    }
-    printf("\n");
+    return split_is_obstacle(obs, play, baby);
 }
 
 bool game_loop(kidiot_t *play, int keys[])
