@@ -12,17 +12,17 @@ static char *open_file(int fd, struct stat *stats, char *path)
     char *buffer = NULL;
 
     if (fd == -1) {
-        fprintf(stderr, "\033[1;31m[ERROR]\033[0m Couldn't open the file\n");
+        fprintf(stderr, "%s[ERROR]%s Couldn't open the file\n", R, W);
         return NULL;
     }
     if (stat(path, stats) != 0) {
-        fprintf(stderr, "\033[1;31m[ERROR]\033[0m Couldn't stat file\n");
+        fprintf(stderr, "%s[ERROR]%s Couldn't stat file\n", R, W);
         close(fd);
         return NULL;
     }
     buffer = calloc(stats->st_size + 1, sizeof(char));
     if (!buffer) {
-        fprintf(stderr, "\033[1;31m[ERROR]\033[0m Couldn't malloc\n");
+        fprintf(stderr, "%s[ERROR]%s Couldn't malloc\n", R, W);
         close(fd);
         return NULL;
     }
@@ -37,7 +37,7 @@ char **read_map(char *path)
     char **map = NULL;
 
     if ((read(fd, buffer, stats.st_size)) == -1) {
-        fprintf(stderr, "\033[1;31m[ERROR]\033[0m Couldn't read file\n");
+        fprintf(stderr, "%s[ERROR]%s Couldn't read file\n", R, W);
         free(buffer);
         return NULL;
     }

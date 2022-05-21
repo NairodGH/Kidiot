@@ -91,26 +91,47 @@ static void get_keys(int *keys)
     if (IsKeyPressed(KEY_SPACE)) keys[17] = 1;
 }
 
-int main(void)
+int args_invalid(int ac, char **av)
 {
-    const int screenWidth = 1280;
-    const int screenHeight = 720;
+    if (ac == 2 && !strcmp(av[1], "-h")) {
+        printf("%s[KIDIOT]%s\n\tBasically a 2D \"Who's your daddy\" ", Y, W);
+        printf("coded in 2 days in C with the raylib.\n\tIt's an Epitech ");
+        printf("GameJam (20/05/2022) project made by Dorian AYOUL and Xavier ");
+        printf("TONNELLIER.\n\n%s[ARGUMENTS]%s\n\t-h\thelp\n\t[width] ", G, W);
+        printf("[height] [framerate]\tstart the game with a valid screen ");
+        printf("width/height/framerate\n\n%s[CONTROLS]%s\n\tBaby:\n\t", B, W);
+        printf("Z\tgo up\n\tQ\tgo left\n\tS\tgo down\n\tD\tgo right\n\tSPACE");
+        printf("\tinteract\n\n\tMom:\n\tUP ARROW\tgo up\n\tLEFT ARROW\tgo ");
+        printf("left\n\tDOWN ARROW\tgo down\n\tRIGHT ARROW\tgo right\n\t");
+        return printf("NUMPAD 0\tinteract\n\nCheck the readme for more info\n");
+    }
+    if (ac != 4)
+        return fprintf(stderr, "%s[ERROR]%s Invalid number of args\n", R, W);
+    for (size_t i = 1; i < 4; i++)
+        for (size_t j = 0; av[i][j] != '\0'; j++)
+            if (!isdigit(av[i][j]))
+                return fprintf(stderr, "%s[ERROR]%s Invalid arg value\n", R, W);
+    return 0;
+}
+
+int main(int ac, char **av)
+{
     char **floor_1 = read_map("map/first_floor.txt");
     char **floor_2 = read_map("map/second_floor.txt");
     entity_t *players = init_entity();
-    int keys[18] = {0};
     
     SetTraceLogLevel(LOG_NONE);
-    InitWindow(screenWidth, screenHeight, "Kidiot");
-    SetTargetFPS(60);
-    while (!WindowShouldClose()) {
+    if (args_invalid(ac, av))
+        return 84;
+    InitWindow(atoi(av[1]), atoi(av[2]), "Kidiot");
+    SetTargetFPS(atoi(av[3]));
+    for (int keys[18] = {0}; !WindowShouldClose(); memset(keys, 0, 18)) {
         get_keys(keys);
         game_loop(floor_1, floor_2, players, keys);
         BeginDrawing();
         ClearBackground(RAYWHITE);
         draw_map(floor_1, floor_2, players);
         EndDrawing();
-        memset(keys, 0, 18);
     }
     free_double_tab(floor_1);
     free_double_tab(floor_2);
