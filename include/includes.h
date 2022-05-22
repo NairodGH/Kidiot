@@ -20,8 +20,17 @@
 
 typedef struct {
     bool is_cut;
+    int floor;
     float time;
+    Vector2 pos;
 } cactus_t;
+
+typedef struct {
+    bool is_fixed;
+    int floor;
+    float time;
+    Vector2 pos;
+} electric_t;
 
 typedef struct {
     bool already_use;
@@ -39,11 +48,6 @@ typedef struct {
     bool is_open;
     float time;
 } bathtub_t;
-
-typedef struct {
-    bool is_fixed;
-    float time;
-} electric_t;
 
 typedef struct {
     bool is_open;
@@ -126,3 +130,15 @@ void gest_clock(kidiot_t *players, int key[]);
 
 void screen_win();
 void screen_loose();
+
+cactus_t *init_cactus(kidiot_t *kidiot);
+electric_t *init_elec(kidiot_t *kidiot);
+
+void find_cactus(kidiot_t *kidiot, int x, int y, float time);
+void find_elec(kidiot_t *kidiot, int x, int y, float time);
+void find_rescue_elec(kidiot_t *kidiot, int x, int y);
+void find_rescue_cactus(kidiot_t *kidiot, int x, int y);
+
+void print_vector(Vector2 *pos);
+Vector2 *find_all_cell(char **map, char cell);
+int get_len_vect(Vector2 *pos);

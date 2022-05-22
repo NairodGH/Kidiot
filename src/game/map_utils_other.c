@@ -7,6 +7,16 @@
 
 #include "includes.h"
 
+void print_vector(Vector2 *pos)
+{
+    size_t i = 0;
+
+    while (pos[i].x != 0 && pos[i].y != 0) {
+        printf("x = %0f | y = %0f\n", pos[i].x, pos[i].y);
+        i++;
+    }
+}
+
 Vector2 find_spawn_pos(char cell, char **map)
 {
     Vector2 ret = {0, 0};

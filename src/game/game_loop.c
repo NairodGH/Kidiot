@@ -18,11 +18,6 @@ static void split_check_death(kidiot_t *player, char **map)
         player->baby->hp -= 20;
         player->baby->fridge->time = 5;
     }
-    if (map[(int)player->baby->pos.x][(int)player->baby->pos.y] == 'C' &&
-        player->baby->cactus->time <= 0 && !player->baby->cactus->is_cut) {
-        player->baby->hp -= 10;
-        player->baby->cactus->time = 3;
-    }
 }
 
 static bool check_death(kidiot_t *player)
@@ -31,8 +26,6 @@ static bool check_death(kidiot_t *player)
         ? player->first_floor : player->second_floor;
 
     if (player->baby->bathtub->time <= 0)
-        return true;
-    if (player->baby->electric->time <= 0)
         return true;
     split_check_death(player, map);
     if (player->baby->hp <= 0)

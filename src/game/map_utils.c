@@ -7,6 +7,37 @@
 
 #include "includes.h"
 
+int get_len_vect(Vector2 *pos)
+{
+    size_t i = 0;
+
+    while (pos[i].x != 0 && pos[i].y != 0)
+        i++;
+    return i + 1;
+}
+
+Vector2 *find_all_cell(char **map, char cell)
+{
+    Vector2 *pos = malloc(sizeof(Vector2) * 1);
+    size_t i = 0;
+
+    pos[0].x = 0;
+    pos[0].y = 0;
+    for (size_t x = 0; map[x] != NULL; x++) {
+        for (size_t y = 0; map[x][y] != '\0'; y++) {
+            if (map[x][y] == cell) {
+                pos = realloc(pos, (sizeof(Vector2) * (get_len_vect(pos) + 1)));
+                pos[i].y = (float)x;
+                pos[i].x = (float)y;
+                pos[i + 1].y = 0;
+                pos[i + 1].x = 0;
+                i++;
+            }
+        }
+    }
+    return pos;
+}
+
 size_t count_new_line(char *str)
 {
     size_t i = 0;

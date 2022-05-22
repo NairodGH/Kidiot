@@ -70,7 +70,7 @@ void main_loop(kidiot_t *kidiot)
     for (int keys[10] = {0}; !WindowShouldClose() || kidiot->game_time <= 0;) {
         get_keys(keys);
         kidiot->keys = keys;
-        if (game_loop(kidiot, keys))
+        if (game_loop(kidiot, keys) || kidiot->game_time < 0)
             break;
         BeginDrawing();
         ClearBackground(RAYWHITE);

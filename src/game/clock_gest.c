@@ -59,6 +59,12 @@ static void check_mom_rescue_split(char **map, kidiot_t *play, int keys[])
     if (map[(int)play->mom->pos.x][(int)play->mom->pos.y] == 'M'
         && keys[9] == 1)
         play->baby->microwave->is_open = false;
+    if (map[(int)play->mom->pos.x][(int)play->mom->pos.y] == 'C'
+        && keys[9] == 1)
+        find_rescue_cactus(play, (int)play->mom->pos.x, (int)play->mom->pos.y);
+    if (map[(int)play->mom->pos.x][(int)play->mom->pos.y] == 'E'
+        && keys[9] == 1)
+        find_rescue_elec(play, (int)play->mom->pos.x, (int)play->mom->pos.y);
 }
 
 static void check_mom_rescue(kidiot_t *play, int keys[])
@@ -96,7 +102,6 @@ void gest_clock_split(char **map, kidiot_t *play, int keys[], float time)
     if (keys[4] == 1 &&
         (map[(int)(play->baby->pos.x)][(int)play->baby->pos.y]) == 'V'
         && !play->baby->vacuum->already_use) {
-        printf("la\n");
         PlaySound(play->use);
         play->baby->vacuum->already_use = true;
         play->baby->vacuum->time = 3;
@@ -117,22 +122,22 @@ void gest_clock(kidiot_t *play, int keys[])
 
     play->game_time -= time;
     check_mom_rescue(play, keys);
-    if (play->baby->cactus->time > 0)
-        play->baby->cactus->time -= time;
-    else
-        play->baby->cactus->time = 0;
     if (play->baby->fridge->time > 0)
         play->baby->fridge->time -= time;
     else
         play->baby->fridge->time = 0;
-    if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'E') {
-        asprintf(&buffer, "time : %0.1f", play->baby->electric->time);
-        DrawText(buffer, GetScreenWidth() / 5, 5, 20, LIGHTGRAY);
-        free(buffer);
-        play->baby->electric->time -= time;
+    if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'E')
+        find_elec(play, (int)play->baby->pos.x, (int)play->baby->pos.y, time);
+    else {
+        for (size_t i = 0; play->baby->electric[i].floor != -1; i++)
+            play->baby->electric[i].time = 5;
     }
-    else
-        play->baby->electric->time = 5;
+    if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'C')
+        find_cactus(play, (int)play->baby->pos.x, (int)play->baby->pos.y, time);
+    else {
+        for (size_t i = 0; play->baby->cactus[i].floor != -1; i++)
+            play->baby->cactus[i].time = 2;
+    }
     gest_clock_split(map, play, keys, time);
     check_oven(play, map, time);
 }

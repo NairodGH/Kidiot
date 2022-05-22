@@ -46,29 +46,26 @@ static void init_obs_split(baby_t *baby)
 static void init_obs(baby_t *baby)
 {
     frigde_t *frigde = malloc(sizeof(frigde_t) * 1);
-    cactus_t *cactus = malloc(sizeof(cactus_t) * 1);
     bathtub_t *bathtub = malloc(sizeof(bathtub_t) * 1);
-    electric_t *electric = malloc(sizeof(electric_t) * 1);
 
-    cactus->is_cut = false;
-    cactus->time = 0;
     frigde->is_open = true;
     frigde->time = 0;
     bathtub->is_open = true;
     bathtub->time = 4;
-    electric->is_fixed = false;
-    electric->time = 5;
-    baby->cactus = cactus;
     baby->fridge = frigde;
     baby->bathtub = bathtub;
-    baby->electric = electric;
     init_obs_split(baby);
     baby->speed = 0.05;
 }
 
 static void init_kidiot_split(kidiot_t *kidiot, baby_t *baby, mom_t *mom)
 {
-    kidiot->game_time = 90;
+    cactus_t *cactus = init_cactus(kidiot);
+    electric_t *electric = init_elec(kidiot);
+
+    kidiot->game_time = 30;
+    baby->cactus = cactus;
+    baby->electric = electric;
     kidiot->baby = baby;
     kidiot->mom = mom;
     kidiot->textures[0] = LoadTexture("ressources/maggie.png");
