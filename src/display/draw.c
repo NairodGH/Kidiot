@@ -31,7 +31,7 @@ static void spl_draw_second(kidiot_t *kidiot, int wd, int height, Vector2 size)
 {
     Vector2 pos = {(wd / 2), 0};
 
-    for (size_t x  = 0; kidiot->second_floor[x] != NULL; x++) {
+    for (size_t x = 0; kidiot->second_floor[x] != NULL; x++) {
         for (size_t y = 0; kidiot->second_floor[x][y] != '\0'; y++) {
             draw_misc(kidiot, kidiot->second_floor[x][y],
             (Rectangle){pos.x, pos.y, size.x, size.y},
@@ -51,7 +51,7 @@ void draw_second_map(kidiot_t *kidiot, int wd, int height)
         {wd / strlen(kidiot->second_floor[0]) / 2,
         height / get_map_size(kidiot->second_floor)};
 
-    for (size_t x  = 0; kidiot->second_floor[x] != NULL; x++) {
+    for (size_t x = 0; kidiot->second_floor[x] != NULL; x++) {
         for (size_t y = 0; kidiot->second_floor[x][y] != '\0'; y++) {
             DrawTexturePro(kidiot->textures[2], (Rectangle){877, 0, 73, 58},
             (Rectangle){pos.x, pos.y, size.x, size.y},

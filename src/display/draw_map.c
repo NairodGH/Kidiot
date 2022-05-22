@@ -41,8 +41,7 @@ void draw_elec(kidiot_t *kidiot, Rectangle dest, pos_t pos)
                 dest, orig, 0, RAYWHITE);
 }
 
-static void draw_misc_split(
-    kidiot_t *kidiot, char cell, Rectangle dest, pos_t pos)
+void draw_misc_split(kidiot_t *kidiot, char cell, Rectangle dest, pos_t pos)
 {
     Vector2 orig = {0, 0};
 
@@ -62,8 +61,7 @@ static void draw_misc_split(
             {804, 0, 27, 55}, dest, orig, 0, RAYWHITE);
 }
 
-static void draw_misc_spl(
-    kidiot_t *kidiot, char cell, Rectangle dest, pos_t pos)
+void draw_misc_spl(kidiot_t *kidiot, char cell, Rectangle dest, pos_t pos)
 {
     Vector2 orig = {0, 0};
 

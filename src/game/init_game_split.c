@@ -45,7 +45,6 @@ electric_t *init_elec(kidiot_t *kidiot)
     return elec;
 }
 
-
 cactus_t *init_cactus(kidiot_t *kidiot)
 {
     size_t i = 0;

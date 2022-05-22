@@ -15,7 +15,7 @@ static void split_check_death(kidiot_t *player, char **map)
     }
     if (player->keys[4] == 1)
         player->baby->fridge->interaction = true;
-    if (map[(int)player->baby->pos.x][(int)player->baby->pos.y] == 'F' && 
+    if (map[(int)player->baby->pos.x][(int)player->baby->pos.y] == 'F' &&
         player->baby->fridge->time <= 0 && player->baby->fridge->is_open
         && player->baby->fridge->interaction) {
         player->baby->hp -= 20;

@@ -41,7 +41,7 @@ char **read_map(char *path)
         free(buffer);
         return NULL;
     }
-    close (fd);
+    close(fd);
     map = get_map(buffer);
     free(buffer);
     return (map);

@@ -59,7 +59,7 @@ static void check_mom_rescue_split(char **map, kidiot_t *play, int keys[])
         play->baby->bathtub->is_full[play->baby->floor] = false;
     if (map[(int)play->mom->pos.x][(int)play->mom->pos.y] == 'F'
         && keys[9] == 1)
-        play->baby->fridge->is_open = false; 
+        play->baby->fridge->is_open = false;
     if (map[(int)play->mom->pos.x][(int)play->mom->pos.y] == 'O'
         && keys[9] == 1)
         play->baby->oven->is_open = false;

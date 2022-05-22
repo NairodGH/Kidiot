@@ -78,7 +78,7 @@ void main_loop(kidiot_t *kidiot)
         draw_map(kidiot, GetScreenHeight(), GetScreenWidth());
         DrawRectangle(15, 10, (int)kidiot->baby->hp, 20, GREEN);
         asprintf(&time, "game time left : %0.1fs", kidiot->game_time);
-        DrawText(time, GetScreenWidth() / 3, 5, 20, LIGHTGRAY);
+        DrawText(time, GetScreenWidth() / 2, 5, 20, LIGHTGRAY);
         free(time);
         gest_clock(kidiot, keys);
         EndDrawing();
@@ -91,7 +91,7 @@ int main(int ac, char **av)
 {
     int save_hp = 0;
     kidiot_t *kidiot;
-    
+
     SetTraceLogLevel(LOG_NONE);
     if (args_invalid(ac, av))
         return 84;
