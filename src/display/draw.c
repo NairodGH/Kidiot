@@ -9,8 +9,9 @@
 
 void my_draw_color(char cell, Vector2 pos, Vector2 size_rect, Texture2D textures[4])
 {
-    if (cell == 'E')
+    if (cell == 'E') {
         DrawRectangleV(pos, size_rect, GREEN);
+    }
     if (cell == '#')
         DrawRectangleV(pos, size_rect, BLACK);
     if (cell == 'C')
@@ -35,15 +36,42 @@ void my_draw_color(char cell, Vector2 pos, Vector2 size_rect, Texture2D textures
 
 void draw_baby(kidiot_t *kidiot, Vector2 pos)
 {
-    DrawTextureRec(kidiot->textures[0], (Rectangle){7, 0, 42, 42}, pos, RAYWHITE);
+    if (kidiot->keys[0])
+        return DrawTextureRec(kidiot->textures[0],
+        (Rectangle){410, 7 + (int)GetTime() % 3 * 44, 32, 40}, pos, RAYWHITE);
+    if (kidiot->keys[1])
+        return DrawTextureRec(kidiot->textures[0],
+        (Rectangle){140, 7 + (int)GetTime() % 3 * 44, 32, 40}, pos, RAYWHITE);
+    if (kidiot->keys[2])
+        return DrawTextureRec(kidiot->textures[0],
+        (Rectangle){274, 7 + (int)GetTime() % 3 * 44, 32, 40}, pos, RAYWHITE);
+    if (kidiot->keys[3])
+        return DrawTextureRec(kidiot->textures[0],
+        (Rectangle){7, 7 + (int)GetTime() % 3 * 44, 32, 40}, pos, RAYWHITE);
+    if (kidiot->keys[4])
+        return DrawTextureRec(kidiot->textures[0],
+        (Rectangle){7, 280 + (int)GetTime() % 3 * 44, 42, 42}, pos, RAYWHITE);
+    DrawTextureRec(kidiot->textures[0], (Rectangle){7, 7, 32, 40}, pos, RAYWHITE);
 }
 
 void draw_mom(kidiot_t *kidiot, Vector2 pos)
 {
+    if (kidiot->keys[5])
+        return DrawTextureRec(kidiot->textures[1],
+        (Rectangle){441, 4 + (int)GetTime() % 3 * 62, 28, 60}, pos, RAYWHITE);
+    if (kidiot->keys[6])
+        return DrawTextureRec(kidiot->textures[1],
+        (Rectangle){156, 4 + (int)GetTime() % 3 * 62, 28, 60}, pos, RAYWHITE);
+    if (kidiot->keys[7])
+        return DrawTextureRec(kidiot->textures[1],
+        (Rectangle){302, 4 + (int)GetTime() % 3 * 62, 28, 60}, pos, RAYWHITE);
     if (kidiot->keys[8])
         return DrawTextureRec(kidiot->textures[1],
-        (Rectangle){15, 4 + (int)GetTime() % 3 * 62, 22, 59}, pos, RAYWHITE);
-    DrawTextureRec(kidiot->textures[1], (Rectangle){18, 65, 17, 59}, pos, RAYWHITE);
+        (Rectangle){15, 4 + (int)GetTime() % 3 * 62, 28, 60}, pos, RAYWHITE);
+    if (kidiot->keys[9])
+        return DrawTextureRec(kidiot->textures[1],
+        (Rectangle){3, 196 + (int)GetTime() % 3 * 62, 50, 60}, pos, RAYWHITE);
+    DrawTextureRec(kidiot->textures[1], (Rectangle){18, 65, 17, 60}, pos, RAYWHITE);
 }
 
 void draw_second_map(kidiot_t *play, int wd, int hg)
