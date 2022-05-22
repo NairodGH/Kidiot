@@ -36,9 +36,11 @@ static void check_oven(kidiot_t *play, char **map, float time)
         play->baby->oven->interaction = true;
     if (play->baby->oven->is_burning == true)
         play->baby->oven->time_burn -= time;
-    if (play->baby->oven->time <= 0)
+    if (play->baby->oven->time <= 0) {
         play->baby->oven->is_burning = true;
-    else if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'O'
+        play->baby->oven->time = 3;
+        play->baby->oven->is_open = false;
+    } else if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'O'
         && play->baby->oven->is_open && play->baby->oven->interaction) {
         DrawRectangle(GetScreenWidth() / 5, GetScreenHeight() / 100,
         play->baby->oven->time * (GetScreenWidth() / 100),
@@ -81,6 +83,7 @@ static void check_mom_rescue(kidiot_t *play, int keys[])
     if ((int)play->mom->pos.x == (int)play->baby->pos.x && keys[9] == 1
         && (int)play->mom->pos.y == (int)play->baby->pos.y
         && play->baby->floor == play->mom->floor) {
+            printf("here\n");
         play->baby->oven->is_burning = false;
         play->baby->speed = 0.08;
     }
