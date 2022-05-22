@@ -24,6 +24,11 @@ typedef struct {
 } cactus_t;
 
 typedef struct {
+    bool already_use;
+    float time;
+} vacuum_t;
+
+typedef struct {
     bool is_open;
     bool is_burning;
     float time;
@@ -45,6 +50,11 @@ typedef struct {
     float time;
 } frigde_t;
 
+typedef struct {
+    bool is_open;
+    float time;
+} microwave_t;
+
 typedef struct baby_s {
     Vector2 pos;
     Vector2 temp_pos;
@@ -56,6 +66,8 @@ typedef struct baby_s {
     bathtub_t *bathtub;
     electric_t *electric;
     oven_t *oven;
+    vacuum_t *vacuum;
+    microwave_t *microwave;
 } baby_t;
 
 typedef struct {
@@ -67,6 +79,7 @@ typedef struct {
 
 typedef struct {
     Vector2 pos_toilet[2];
+    bool is_open[2];
     float time;
     Vector2 pos_stairs[2];
 } tp_t;
@@ -79,6 +92,7 @@ typedef struct {
     char **second_floor;
     Texture2D textures[4];
     int *keys;
+    float game_time;
 } kidiot_t;
 
 #define R "\033[1;31m"
@@ -105,6 +119,9 @@ bool is_obstacle(char obs, kidiot_t *play, bool baby);
 void move_players_mom(kidiot_t *play, int keys[]);
 void move_players_baby(kidiot_t *play, int keys[]);
 
-void draw_map(kidiot_t *play);
+void draw_map(kidiot_t *play, int hg, int wd);
 
-void gest_clock(kidiot_t *players);
+void gest_clock(kidiot_t *players, int key[]);
+
+void screen_win();
+void screen_loose();

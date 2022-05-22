@@ -29,6 +29,8 @@ set(SRC
   src/game/move_players.c
   src/game/clock_gest.c
   src/game/map_utils_other.c
+  src/game/win_screen.c
+  src/game/load_map.c
   src/display/draw.c
 )
 

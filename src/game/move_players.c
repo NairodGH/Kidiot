@@ -23,8 +23,9 @@ bool check_speed(kidiot_t *play, int keys[], bool baby)
         pos->x -= speed;
     if (keys[3 + i] == 1)
         pos->x += speed;
-    if (save_y != (int)pos->y || save_x != (int)pos->x)
+    if (save_y != (int)pos->y || save_x != (int)pos->x) {
         return true;
+    }
     return false;
 }
 
@@ -38,13 +39,13 @@ void move_players_baby(kidiot_t *play, int keys[])
     if (keys[0] == 1 && !(is_obstacle
         (map[(int)play->baby->pos.x][(int)(play->baby->pos.y + 1)], play, 1)))
         play->baby->pos.y += 1;
-    if (keys[1] == 1 && !(is_obstacle
+    else if (keys[1] == 1 && !(is_obstacle
         (map[(int)play->baby->pos.x][(int)(play->baby->pos.y - 1)], play, 1)))
         play->baby->pos.y -= 1;
-    if (keys[2] == 1 && !(is_obstacle
+    else if (keys[2] == 1 && !(is_obstacle
         (map[(int)(play->baby->pos.x - 1)][(int)play->baby->pos.y], play, 1)))
         play->baby->pos.x -= 1;
-    if (keys[3] == 1 && !(is_obstacle
+    else if (keys[3] == 1 && !(is_obstacle
         (map[(int)(play->baby->pos.x + 1)][(int)play->baby->pos.y], play, 1)))
         play->baby->pos.x += 1;
 }
@@ -53,19 +54,19 @@ void move_players_mom(kidiot_t *play, int keys[])
 {
     char **map = NULL;
 
-    if (!check_speed(play, keys, false))
+    if (play->baby->vacuum->time > 0 || !check_speed(play, keys, false))
         return;
     map = ((play->mom->floor == 0) ? play->first_floor : play->second_floor);
     if (keys[5] == 1 && !(is_obstacle
         (map[(int)play->mom->pos.x][(int)play->mom->pos.y + 1], play, false)))
         play->mom->pos.y += 1;
-    if (keys[6] == 1 && !(is_obstacle
+    else if (keys[6] == 1 && !(is_obstacle
         (map[(int)play->mom->pos.x][(int)play->mom->pos.y - 1], play, false)))
         play->mom->pos.y -= 1;
-    if (keys[7] == 1 && !(is_obstacle
+    else if (keys[7] == 1 && !(is_obstacle
         (map[(int)play->mom->pos.x - 1][(int)play->mom->pos.y], play, false)))
         play->mom->pos.x -= 1;
-    if (keys[8] == 1 && !(is_obstacle
+    else if (keys[8] == 1 && !(is_obstacle
         (map[(int)play->mom->pos.x + 1][(int)play->mom->pos.y], play, false)))
         play->mom->pos.x += 1;
 }

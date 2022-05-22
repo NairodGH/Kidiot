@@ -18,6 +18,8 @@ void free_everything(kidiot_t *kidiot, char *buffer)
     free(kidiot->baby->oven);
     free(kidiot->baby->cactus);
     free(kidiot->baby->fridge);
+    free(kidiot->baby->vacuum);
+    free(kidiot->baby->microwave);
     free(kidiot->tp);
     free(kidiot->baby);
     free(kidiot->mom);
@@ -30,7 +32,7 @@ static void get_keys(int *keys)
     if (IsKeyDown(KEY_LEFT)) keys[1] = 1;
     if (IsKeyDown(KEY_UP)) keys[2] = 1;
     if (IsKeyDown(KEY_DOWN)) keys[3] = 1;
-    if (IsKeyDown(KEY_ENTER)) keys[4];
+    if (IsKeyDown(KEY_ENTER)) keys[4] = 1;
     if (IsKeyDown(KEY_D)) keys[5] = 1;
     if (IsKeyDown(KEY_A)) keys[6] = 1;
     if (IsKeyDown(KEY_W)) keys[7] = 1;
@@ -61,31 +63,29 @@ int args_invalid(int ac, char **av)
     return 0;
 }
 
-void my_memset(int *keys, int i, int z)
-{
-    for (size_t i = 0; i != z; i++)
-        keys[i] = 0;
-}
-
 void main_loop(kidiot_t *kidiot, char **buffer)
 {
     int save_hp = kidiot->baby->hp;
+    char *time = NULL;
 
-    for (int keys[10] = {0}; !WindowShouldClose();) {
+    for (int keys[10] = {0}; !WindowShouldClose() || kidiot->game_time <= 0;) {
         get_keys(keys);
         kidiot->keys = keys;
         if (game_loop(kidiot, keys))
             break;
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        draw_map(kidiot);
+        draw_map(kidiot, GetScreenHeight(), GetScreenWidth());
         if (kidiot->baby->hp != save_hp) {
             free(*buffer);
             asprintf(buffer, "baby hp = %d", kidiot->baby->hp);
         }
         DrawText(*buffer, 10, 5, 20, LIGHTGRAY);
+        asprintf(&time, "game time left : %0.1f", kidiot->game_time);
+        DrawText(time, GetScreenWidth() / 3, 5, 20, LIGHTGRAY);
+        free(time);
+        gest_clock(kidiot, keys);
         EndDrawing();
-        gest_clock(kidiot);
         for (size_t i = 0; i != 10; i++)
             keys[i] = 0;
     }
@@ -105,6 +105,10 @@ int main(int ac, char **av)
     SetTargetFPS(atoi(av[3]));
     asprintf(&buffer, "baby hp = %d", kidiot->baby->hp);
     main_loop(kidiot, &buffer);
+    if (!kidiot->game_time <= 0)
+        screen_loose();
+    else
+        screen_win();
     free_everything(kidiot, buffer);
     CloseWindow();
     return 0;

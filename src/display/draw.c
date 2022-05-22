@@ -66,18 +66,16 @@ void draw_second_map(kidiot_t *play, int wd, int hg)
     }
     if (play->baby->floor == 1) {
         baby_play.x += wd / 2;
-        DrawRectangleV(baby_play, size_rect_s, MAROON);
+        draw_baby(play, baby_play);
     }
-    if (play->mom->floor == 1) {
+    if (play->mom->floor == 1 && play->baby->vacuum->time <= 0) {
         mom_play.x += wd / 2;
-        DrawRectangleV(mom_play, size_rect_s, YELLOW);
+        draw_mom(play, mom_play);
     }
 }
 
-void draw_map(kidiot_t *play)
+void draw_map(kidiot_t *play, int hg, int wd)
 {
-    int hg = GetScreenHeight();
-    int wd = GetScreenWidth();
     Vector2 pos = {0, 0};
     Vector2 size_rect = {wd / strlen(play->first_floor[0]) / 2, hg / get_map_size(play->first_floor)};
     Vector2 baby_play = {play->baby->pos.y * (wd / strlen(play->first_floor[0]) / 2),
@@ -96,7 +94,6 @@ void draw_map(kidiot_t *play)
     draw_second_map(play, wd, hg);
     if (play->baby->floor == 0)
         draw_baby(play, baby_play);
-    if (play->mom->floor == 0) {
+    if (play->mom->floor == 0 && play->baby->vacuum->time <= 0)
         draw_mom(play, mom_play);
-    }
 }
