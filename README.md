@@ -76,10 +76,10 @@ As the baby:
 - WC = press once to teleport to the other toilet
 
 As the mom:
-- Bathtub = stay on it to empty the bath
-- Cactus = stay on it to cut it (disables it)
-- Electric outlet = stay on it to cancel the baby's electrocution
-- Fridge = stay on it to cancel the baby's freeze
-- Microwave = stay on on the baby to cancel its speedboost
-- Oven = stay on it on the baby to extinguish it
-- WC = stay on it on the toilet, if both are closed they cant be used anymore
+- Bathtub = press once on it to empty the bath
+- Cactus = press once on it to cut it (disables it)
+- Electric outlet = press once on it to cancel the baby's electrocution
+- Fridge = press once on it to cancel the baby's freeze
+- Microwave = press once on on the baby to cancel its speedboost
+- Oven = press once on it on the baby to extinguish it
+- WC = press once on it (disables it)

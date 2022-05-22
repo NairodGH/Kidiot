@@ -7,75 +7,84 @@
 
 #include "includes.h"
 
-void my_draw_color(kidiot_t *kidiot, char cell, Vector2 pos, Vector2 size)
+void draw_misc(kidiot_t *kidiot, char cell, Rectangle dest)
 {
-    if (cell == 'E')
-        DrawTextureRec(kidiot->textures[3],
-        (Rectangle){0 + (int)(GetTime() * 10) % 5 * 52, 0, 52, 39}, pos, RAYWHITE);
+    Vector2 orig = {0, 0};
+
     if (cell == '#')
-        DrawTexturePro(kidiot->textures[2], (Rectangle){950, 0, 73, 58},
-        (Rectangle){pos.x, pos.y, size.x, size.y}, (Vector2){0, 0}, 0, RAYWHITE);
-    if (cell == 'C')
-        DrawTextureRec(kidiot->textures[2], (Rectangle){731, 0, 73, 58}, pos, RAYWHITE);
+        DrawTexturePro(kidiot->textures[2], (Rectangle){950, 0, 73, 58}, dest, orig, 0, RAYWHITE);
     if (cell == 'B')
-        DrawTextureRec(kidiot->textures[2], (Rectangle){366, 0, 73, 58}, pos, RAYWHITE);
-    if (cell == 'W')
-        DrawTextureRec(kidiot->textures[2], (Rectangle){585, 0, 73, 58}, pos, RAYWHITE);
+        DrawTexturePro(kidiot->textures[2], (Rectangle){366, 0, 30, 58},
+        dest, orig, 0, RAYWHITE);
+    if (cell == 'C')
+        DrawTexturePro(kidiot->textures[2], (Rectangle){731, 0, 16, 18}, dest, orig, 0, RAYWHITE);
+    if (cell == 'E')
+        DrawTexturePro(kidiot->textures[3], (Rectangle){0 + (int)(GetTime() * 10) % 5 * 104, 0, 107, 87},
+        dest, orig, 0, RAYWHITE);
     if (cell == 'F')
-        DrawTextureRec(kidiot->textures[2], (Rectangle){74, 0, 73, 58}, pos, RAYWHITE);
-    if (cell == 'T')
-        DrawTextureRec(kidiot->textures[2], (Rectangle){0, 0, 73, 58}, pos, RAYWHITE);
-    if (cell == 'V')
-        DrawTextureRec(kidiot->textures[2], (Rectangle){439, 0, 73, 58}, pos, RAYWHITE);
-    if (cell == 'Z')
-        DrawTextureRec(kidiot->textures[2], (Rectangle){804, 0, 73, 58}, pos, RAYWHITE);
+        DrawTexturePro(kidiot->textures[2], (Rectangle){74, 0, 28, 48}, dest, orig, 0, RAYWHITE);
+    if (cell == 'M') {
+        dest.height /= 2;
+        DrawTexturePro(kidiot->textures[2], (Rectangle){147, 0, 25, 20}, dest, orig, 0, RAYWHITE);
+    }
     if (cell == 'O')
-        DrawTextureRec(kidiot->textures[2], (Rectangle){220, 0, 73, 58}, pos, RAYWHITE);
-    if (cell == 'M')
-        DrawTextureRec(kidiot->textures[2], (Rectangle){147, 0, 73, 58}, pos, RAYWHITE);
+        DrawTexturePro(kidiot->textures[2], (Rectangle){220, 0, 31, 40}, dest, orig, 0, RAYWHITE);
     if (cell == 'S')
-        DrawTexturePro(kidiot->textures[2], (Rectangle){1023, 0, 59, 58},
-        (Rectangle){pos.x, pos.y, size.x, size.y}, (Vector2){0, 0}, 0, RAYWHITE);
+        DrawTexturePro(kidiot->textures[2], (Rectangle){1023, 0, 59, 58}, dest, orig, 0, RAYWHITE);
+    if (cell == 'T') {
+        dest.width *= 3;
+        DrawTexturePro(kidiot->textures[2], (Rectangle){0, 0, 73, 39}, dest, orig, 0, RAYWHITE);
+    }
+    if (cell == 'V')
+        DrawTexturePro(kidiot->textures[2], (Rectangle){439, 0, 21, 31}, dest, orig, 0, RAYWHITE);
+    if (cell == 'W')
+        DrawTexturePro(kidiot->textures[2], (Rectangle){585, 0, 27, 38}, dest, orig, 0, RAYWHITE);
+    if (cell == 'Z')
+        DrawTexturePro(kidiot->textures[2], (Rectangle){804, 0, 27, 55}, dest, orig, 0, RAYWHITE);
 }
 
-void draw_baby(kidiot_t *kidiot, Vector2 pos)
+void draw_baby(kidiot_t *kidiot, Rectangle dest)
 {
+    Vector2 orig = {0, 0};
+
     if (kidiot->keys[0])
-        return DrawTextureRec(kidiot->textures[0],
-        (Rectangle){410, 7 + (int)GetTime() % 3 * 44, 32, 40}, pos, RAYWHITE);
+        return DrawTexturePro(kidiot->textures[0],
+        (Rectangle){800, 8 + (int)(GetTime() * 10) % 3 * 87, 61, 78}, dest, orig, 0, RAYWHITE);
     if (kidiot->keys[1])
-        return DrawTextureRec(kidiot->textures[0],
-        (Rectangle){140, 7 + (int)GetTime() % 3 * 44, 32, 40}, pos, RAYWHITE);
+        return DrawTexturePro(kidiot->textures[0],
+        (Rectangle){283, 17 + (int)(GetTime() * 10) % 3 * 87, 61, 78}, dest, orig, 0, RAYWHITE);
     if (kidiot->keys[2])
-        return DrawTextureRec(kidiot->textures[0],
-        (Rectangle){274, 7 + (int)GetTime() % 3 * 44, 32, 40}, pos, RAYWHITE);
+        return DrawTexturePro(kidiot->textures[0],
+        (Rectangle){548, 17 + (int)(GetTime() * 10) % 3 * 87, 61, 80}, dest, orig, 0, RAYWHITE);
     if (kidiot->keys[3])
-        return DrawTextureRec(kidiot->textures[0],
-        (Rectangle){7, 7 + (int)GetTime() % 3 * 44, 32, 40}, pos, RAYWHITE);
+        return DrawTexturePro(kidiot->textures[0],
+        (Rectangle){16, 16 + (int)(GetTime() * 10) % 3 * 87, 61, 80}, dest, orig, 0, RAYWHITE);
     if (kidiot->keys[4])
-        return DrawTextureRec(kidiot->textures[0],
-        (Rectangle){7, 280 + (int)GetTime() % 3 * 44, 42, 42}, pos, RAYWHITE);
-    DrawTextureRec(kidiot->textures[0], (Rectangle){7, 7, 32, 40}, pos, RAYWHITE);
+        return DrawTexturePro(kidiot->textures[0],
+        (Rectangle){13, 286 + (int)(GetTime() * 10) % 3 * 86, 85, 79}, dest, orig, 0, RAYWHITE);
+    DrawTexturePro(kidiot->textures[0], (Rectangle){16, 103, 61, 80}, dest, orig, 0, RAYWHITE);
 }
 
-void draw_mom(kidiot_t *kidiot, Vector2 pos)
+void draw_mom(kidiot_t *kidiot, Rectangle dest)
 {
+    Vector2 orig = {0, 0};
+
     if (kidiot->keys[5])
-        return DrawTextureRec(kidiot->textures[1],
-        (Rectangle){441, 4 + (int)GetTime() % 3 * 62, 28, 60}, pos, RAYWHITE);
+        return DrawTexturePro(kidiot->textures[1],
+        (Rectangle){880, 10 + (int)(GetTime() * 10) % 3 * 124, 52, 116}, dest, orig, 0, RAYWHITE);
     if (kidiot->keys[6])
-        return DrawTextureRec(kidiot->textures[1],
-        (Rectangle){156, 4 + (int)GetTime() % 3 * 62, 28, 60}, pos, RAYWHITE);
+        return DrawTexturePro(kidiot->textures[1],
+        (Rectangle){306, 10 + (int)(GetTime() * 10) % 3 * 124, 52, 116}, dest, orig, 0, RAYWHITE);
     if (kidiot->keys[7])
-        return DrawTextureRec(kidiot->textures[1],
-        (Rectangle){302, 4 + (int)GetTime() % 3 * 62, 28, 60}, pos, RAYWHITE);
+        return DrawTexturePro(kidiot->textures[1],
+        (Rectangle){600, 9 + (int)(GetTime() * 10) % 3 * 124, 40, 116}, dest, orig, 0, RAYWHITE);
     if (kidiot->keys[8])
-        return DrawTextureRec(kidiot->textures[1],
-        (Rectangle){15, 4 + (int)GetTime() % 3 * 62, 28, 60}, pos, RAYWHITE);
+        return DrawTexturePro(kidiot->textures[1],
+        (Rectangle){29, 9 + (int)(GetTime() * 10) % 3 * 124, 43, 116}, dest, orig, 0, RAYWHITE);
     if (kidiot->keys[9])
-        return DrawTextureRec(kidiot->textures[1],
-        (Rectangle){3, 196 + (int)GetTime() % 3 * 62, 50, 60}, pos, RAYWHITE);
-    DrawTextureRec(kidiot->textures[1], (Rectangle){18, 65, 17, 60}, pos, RAYWHITE);
+        return DrawTexturePro(kidiot->textures[1],
+        (Rectangle){5, 392 + (int)(GetTime() * 10) % 3 * 124, 98, 116}, dest, orig, 0, RAYWHITE);
+    DrawTexturePro(kidiot->textures[1], (Rectangle){29, 133, 43, 116}, dest, orig, 0, RAYWHITE);
 }
 
 void draw_second_map(kidiot_t *kidiot, int width, int height)
@@ -100,7 +109,7 @@ void draw_second_map(kidiot_t *kidiot, int width, int height)
     pos.y = 0;
     for (size_t x  = 0; kidiot->second_floor[x] != NULL; x++) {
         for (size_t y = 0; kidiot->second_floor[x][y] != '\0'; y++) {
-            my_draw_color(kidiot, kidiot->second_floor[x][y], pos, size);
+            draw_misc(kidiot, kidiot->second_floor[x][y], (Rectangle){pos.x, pos.y, size.x, size.y});
             pos.x += width / strlen(kidiot->second_floor[x]) / 2;
         }
         pos.x = (width / 2);
@@ -108,11 +117,11 @@ void draw_second_map(kidiot_t *kidiot, int width, int height)
     }
     if (kidiot->baby->floor == 1) {
         baby.x += width / 2;
-        draw_baby(kidiot, baby);
+        draw_baby(kidiot, (Rectangle){baby.x, baby.y, size.x, size.y});
     }
     if (kidiot->mom->floor == 1 && kidiot->baby->vacuum->time <= 0) {
         mom.x += width / 2;
-        draw_mom(kidiot, mom);
+        draw_mom(kidiot, (Rectangle){mom.x, mom.y, size.x, size.y});
     }
 }
 
@@ -137,7 +146,7 @@ void draw_map(kidiot_t *kidiot, int height, int width)
     pos.y = 0;
     for (size_t x = 0; kidiot->first_floor[x] != NULL; x++) {
         for (size_t y = 0; kidiot->first_floor[x][y] != '\0'; y++) {
-            my_draw_color(kidiot, kidiot->first_floor[x][y], pos, size);
+            draw_misc(kidiot, kidiot->first_floor[x][y], (Rectangle){pos.x, pos.y, size.x, size.y});
             pos.x += width / strlen(kidiot->first_floor[x]) / 2;
         }
         pos.x = 0;
@@ -145,7 +154,7 @@ void draw_map(kidiot_t *kidiot, int height, int width)
     }
     draw_second_map(kidiot, width, height);
     if (kidiot->baby->floor == 0)
-        draw_baby(kidiot, baby);
+        draw_baby(kidiot, (Rectangle){baby.x, baby.y, size.x, size.y});
     if (kidiot->mom->floor == 0 && kidiot->baby->vacuum->time <= 0)
-        draw_mom(kidiot, mom);
+        draw_mom(kidiot, (Rectangle){mom.x, mom.y, size.x, size.y});
 }
