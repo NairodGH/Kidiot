@@ -53,12 +53,6 @@ typedef struct {
 typedef struct {
     bool is_open;
     float time;
-    bool interaction;
-} bathtub_t;
-
-typedef struct {
-    bool is_open;
-    float time;
 } frigde_t;
 
 typedef struct {
@@ -66,6 +60,12 @@ typedef struct {
     bool interaction;
     float time;
 } microwave_t;
+
+typedef struct {
+    bool is_open[2];
+    float time;
+    bool interaction;
+} bathtub_t;
 
 typedef struct baby_s {
     Vector2 pos;
