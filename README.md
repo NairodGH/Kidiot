@@ -82,4 +82,4 @@ As the mom:
 - Fridge = press once on it to cancel the baby's freeze
 - Microwave = press once on on the baby to cancel its speedboost
 - Oven = press once on it on the baby to extinguish it
-- WC = press once on it (disables it)
+- WC = press once on it (disables it but not the other one)

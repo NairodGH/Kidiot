@@ -24,6 +24,18 @@ void draw_cactus(kidiot_t *kidiot, Rectangle dest, pos_t pos)
         }
 }
 
+void draw_elec(kidiot_t *kidiot, Rectangle dest, pos_t pos)
+{
+    Vector2 orig = {0, 0};
+
+    for (size_t i = 0; kidiot->baby->electric[i].floor != -1; i++)
+        if ((int)kidiot->baby->electric[i].pos.x == (int)pos.pos.y && (int)kidiot->baby->electric[i].pos.y == (int)pos.pos.x
+            && kidiot->baby->electric[i].floor == pos.floor)
+            if (!kidiot->baby->electric[i].is_fixed)
+                DrawTexturePro(kidiot->textures[3], (Rectangle){0 + (int)(GetTime() * 10) % 5 * 104, 0, 107, 87},
+                dest, orig, 0, RAYWHITE);
+}
+
 void draw_misc(kidiot_t *kidiot, char cell, Rectangle dest, pos_t pos)
 {
     Vector2 orig = {0, 0};
@@ -36,8 +48,7 @@ void draw_misc(kidiot_t *kidiot, char cell, Rectangle dest, pos_t pos)
     if (cell == 'C')
         draw_cactus(kidiot, dest, pos);
     if (cell == 'E')
-        DrawTexturePro(kidiot->textures[3], (Rectangle){0 + (int)(GetTime() * 10) % 5 * 104, 0, 107, 87},
-        dest, orig, 0, RAYWHITE);
+        draw_elec(kidiot, dest, pos);
     if (cell == 'F')
         DrawTexturePro(kidiot->textures[2], (Rectangle){74, 0, 28, 48}, dest, orig, 0, RAYWHITE);
     if (cell == 'M') {
@@ -54,8 +65,12 @@ void draw_misc(kidiot_t *kidiot, char cell, Rectangle dest, pos_t pos)
     }
     if (cell == 'V')
         DrawTexturePro(kidiot->textures[2], (Rectangle){439, 0, 21, 31}, dest, orig, 0, RAYWHITE);
-    if (cell == 'W')
-        DrawTexturePro(kidiot->textures[2], (Rectangle){585, 0, 27, 38}, dest, orig, 0, RAYWHITE);
+    if (cell == 'W') {
+        if (kidiot->tp->is_open[pos.floor])
+            DrawTexturePro(kidiot->textures[2], (Rectangle){585, 0, 27, 38}, dest, orig, 0, RAYWHITE);
+        else
+            DrawTexturePro(kidiot->textures[2], (Rectangle){512, 0, 27, 38}, dest, orig, 0, RAYWHITE);
+    }
     if (cell == 'Z')
         DrawTexturePro(kidiot->textures[2], (Rectangle){804, 0, 27, 55}, dest, orig, 0, RAYWHITE);
 }
