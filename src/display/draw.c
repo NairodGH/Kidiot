@@ -7,7 +7,24 @@
 
 #include "includes.h"
 
-void draw_misc(kidiot_t *kidiot, char cell, Rectangle dest)
+void draw_cactus(kidiot_t *kidiot, Rectangle dest, pos_t pos)
+{
+    Vector2 orig = {0, 0};
+
+    for (size_t i = 0; kidiot->baby->cactus[i].floor != -1; i++)
+        if ((int)kidiot->baby->cactus[i].pos.x == (int)pos.pos.y && (int)kidiot->baby->cactus[i].pos.y == (int)pos.pos.x
+            && kidiot->baby->cactus[i].floor == pos.floor) {
+            if (kidiot->baby->cactus[i].is_cut) {
+                dest.height /= 2;
+                dest.y += dest.height;
+                DrawTexturePro(kidiot->textures[2], (Rectangle){658, 0, 12, 12}, dest, orig, 0, RAYWHITE);
+            }
+            else
+                DrawTexturePro(kidiot->textures[2], (Rectangle){731, 0, 16, 18}, dest, orig, 0, RAYWHITE);
+        }
+}
+
+void draw_misc(kidiot_t *kidiot, char cell, Rectangle dest, pos_t pos)
 {
     Vector2 orig = {0, 0};
 
@@ -17,7 +34,7 @@ void draw_misc(kidiot_t *kidiot, char cell, Rectangle dest)
         DrawTexturePro(kidiot->textures[2], (Rectangle){366, 0, 30, 58},
         dest, orig, 0, RAYWHITE);
     if (cell == 'C')
-        DrawTexturePro(kidiot->textures[2], (Rectangle){731, 0, 16, 18}, dest, orig, 0, RAYWHITE);
+        draw_cactus(kidiot, dest, pos);
     if (cell == 'E')
         DrawTexturePro(kidiot->textures[3], (Rectangle){0 + (int)(GetTime() * 10) % 5 * 104, 0, 107, 87},
         dest, orig, 0, RAYWHITE);
@@ -109,7 +126,8 @@ void draw_second_map(kidiot_t *kidiot, int width, int height)
     pos.y = 0;
     for (size_t x  = 0; kidiot->second_floor[x] != NULL; x++) {
         for (size_t y = 0; kidiot->second_floor[x][y] != '\0'; y++) {
-            draw_misc(kidiot, kidiot->second_floor[x][y], (Rectangle){pos.x, pos.y, size.x, size.y});
+            draw_misc(kidiot, kidiot->second_floor[x][y],
+            (Rectangle){pos.x, pos.y, size.x, size.y}, (pos_t){(Vector2){x, y}, 1});
             pos.x += width / strlen(kidiot->second_floor[x]) / 2;
         }
         pos.x = (width / 2);
@@ -146,7 +164,8 @@ void draw_map(kidiot_t *kidiot, int height, int width)
     pos.y = 0;
     for (size_t x = 0; kidiot->first_floor[x] != NULL; x++) {
         for (size_t y = 0; kidiot->first_floor[x][y] != '\0'; y++) {
-            draw_misc(kidiot, kidiot->first_floor[x][y], (Rectangle){pos.x, pos.y, size.x, size.y});
+            draw_misc(kidiot, kidiot->first_floor[x][y],
+            (Rectangle){pos.x, pos.y, size.x, size.y}, (pos_t){(Vector2){x, y}, 0});
             pos.x += width / strlen(kidiot->first_floor[x]) / 2;
         }
         pos.x = 0;

@@ -19,6 +19,11 @@
 #include "raylib.h"
 
 typedef struct {
+    Vector2 pos;
+    bool floor;
+} pos_t;
+
+typedef struct {
     bool is_cut;
     int floor;
     float time;

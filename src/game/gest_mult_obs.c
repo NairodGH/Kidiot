@@ -14,7 +14,7 @@ void find_rescue_elec(kidiot_t *kidiot, int x, int y)
     while (kidiot->baby->electric[i].floor != -1) {
         if ((int)kidiot->baby->electric[i].pos.x == y &&
             (int)kidiot->baby->electric[i].pos.y == x &&
-            kidiot->baby->floor == kidiot->baby->electric[i].floor) {
+            kidiot->mom->floor == kidiot->baby->electric[i].floor) {
             break;
         }
         i++;
@@ -52,7 +52,7 @@ void find_rescue_cactus(kidiot_t *kidiot, int x, int y)
     while (kidiot->baby->cactus[i].floor != -1) {
         if ((int)kidiot->baby->cactus[i].pos.x == y &&
             (int)kidiot->baby->cactus[i].pos.y == x &&
-            kidiot->baby->floor == kidiot->baby->cactus[i].floor)
+            kidiot->mom->floor == kidiot->baby->cactus[i].floor)
             break;
         i++;
     }
