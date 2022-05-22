@@ -30,7 +30,7 @@ set(SRC
   src/game/clock_gest.c
   src/game/clock_gest_split.c
   src/game/map_utils_other.c
-  src/game/win_screen.c
+  src/game/end_screen.c
   src/game/load_map.c
   src/game/init_game_split.c
   src/game/gest_mult_obs.c

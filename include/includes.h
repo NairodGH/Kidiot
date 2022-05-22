@@ -143,8 +143,7 @@ void draw_baby(kidiot_t *kidiot, Rectangle dest);
 void gest_clock(kidiot_t *players, int key[]);
 void gest_clock_split(char **map, kidiot_t *play, int keys[], float time);
 
-void screen_win();
-void screen_loose();
+void end_screen(bool baby_win, kidiot_t *kidiot, Vector2 orig);
 
 cactus_t *init_cactus(kidiot_t *kidiot);
 electric_t *init_elec(kidiot_t *kidiot);

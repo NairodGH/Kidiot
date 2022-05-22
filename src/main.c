@@ -102,9 +102,9 @@ int main(int ac, char **av)
     SetTargetFPS(atoi(av[3]));
     main_loop(kidiot);
     if (kidiot->game_time < 0)
-        screen_win();
+        end_screen(0, kidiot, (Vector2){0, 0});
     else if (kidiot->baby->hp <= 0)
-        screen_loose();
+        end_screen(1, kidiot, (Vector2){0, 0});
     free_everything(kidiot);
     CloseAudioDevice();
     CloseWindow();

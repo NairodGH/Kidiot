@@ -61,6 +61,7 @@ second_floor.txt
 You can modify them as you please but keep the basics in place to not break it:
 - 1 baby spawn point
 - 1 mom spawn point
+- only 1 furniture of each type except cactus and electrical outlets
 - 1 WC downstairs if 1 WC upstairs and vice versa
 
 ## Balancing
