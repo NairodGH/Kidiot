@@ -16,7 +16,7 @@ static void check_microwave(kidiot_t *play, char **map, float time)
         play->baby->microwave->interaction = true;
     if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'M'
         && play->baby->microwave->is_open && play->baby->microwave->time <= 0) {
-        play->baby->speed = 0.1;
+        play->baby->speed = 0.13;
         play->baby->microwave->is_open = false;
     }
     else if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'M' &&
@@ -83,7 +83,7 @@ static void check_mom_rescue(kidiot_t *play, int keys[])
         && (int)play->mom->pos.y == (int)play->baby->pos.y
         && play->baby->floor == play->mom->floor) {
         play->baby->oven->is_burning = false;
-        play->baby->speed = 0.05;
+        play->baby->speed = 0.08;
     }
     check_mom_rescue_split(map, play, keys);
     if ((int)play->mom->pos.x == play->tp->pos_toilet[0].x &&

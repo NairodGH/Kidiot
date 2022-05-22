@@ -60,7 +60,7 @@ static void init_obs(baby_t *baby)
     baby->fridge = frigde;
     baby->bathtub = bathtub;
     init_obs_split(baby);
-    baby->speed = 0.05;
+    baby->speed = 0.08;
 }
 
 static void init_kidiot_split(kidiot_t *kidiot, baby_t *baby, mom_t *mom)
@@ -90,7 +90,7 @@ kidiot_t *init_kidiot(char **first_floor, char **second_floor)
         return NULL;
     init_obs(baby);
     mom->floor = 0;
-    mom->speed = 0.05;
+    mom->speed = 0.08;
     kidiot->first_floor = first_floor;
     kidiot->second_floor = second_floor;
     baby->pos = find_spawn_pos('b', kidiot->first_floor);

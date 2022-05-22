@@ -7,6 +7,14 @@
 
 #include "includes.h"
 
+static void split_check_speed(Vector2 *pos, int keys[], float speed, int i)
+{
+    if (keys[2 + i] == 1)
+        pos->x -= speed;
+    else if (keys[3 + i] == 1)
+        pos->x += speed;
+}
+
 static bool check_speed(kidiot_t *play, int keys[], bool baby)
 {
     Vector2 *pos = (baby ? &play->baby->temp_pos : &play->mom->temp_pos);
@@ -17,12 +25,10 @@ static bool check_speed(kidiot_t *play, int keys[], bool baby)
 
     if (keys[0 + i] == 1)
         pos->y += speed;
-    if (keys[1 + i] == 1)
+    else if (keys[1 + i] == 1)
         pos->y -= speed;
-    if (keys[2 + i] == 1)
-        pos->x -= speed;
-    if (keys[3 + i] == 1)
-        pos->x += speed;
+    else
+        split_check_speed(pos, keys, speed, i);
     if (save_y != (int)pos->y || save_x != (int)pos->x) {
         return true;
     }
