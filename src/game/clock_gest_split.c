@@ -33,10 +33,12 @@ void gest_clock_split(char **map, kidiot_t *play, int keys[], float time)
             play->baby->cactus[i].time = 2;
     }
     if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'B'
-        && keys[4] == 1)
+        && keys[4] == 1) {
         play->baby->bathtub->interaction = true;
+        play->baby->bathtub->is_full[play->baby->floor] = true;
+    }
     if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'B'
-        && play->baby->bathtub->is_full[play->baby->floor] && play->baby->bathtub->interaction) {
+        && play->baby->bathtub->is_full[play->baby->floor]) {
         DrawRectangle(GetScreenWidth() / 5, 10, play->baby->bathtub->time *
         (GetScreenWidth() / 100), 20, BLUE);
         play->baby->bathtub->time -= time;
