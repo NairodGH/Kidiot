@@ -134,6 +134,11 @@ void move_players_mom(kidiot_t *play, int keys[]);
 void move_players_baby(kidiot_t *play, int keys[]);
 
 void draw_map(kidiot_t *play, int hg, int wd);
+void draw_elec(kidiot_t *kidiot, Rectangle dest, pos_t pos);
+void draw_cactus(kidiot_t *kidiot, Rectangle dest, pos_t pos);
+void draw_misc(kidiot_t *kidiot, char cell, Rectangle dest, pos_t pos);
+void draw_mom(kidiot_t *kidiot, Rectangle dest);
+void draw_baby(kidiot_t *kidiot, Rectangle dest);
 
 void gest_clock(kidiot_t *players, int key[]);
 void gest_clock_split(char **map, kidiot_t *play, int keys[], float time);

@@ -82,8 +82,6 @@ bool is_obstacle(char obs, kidiot_t *play, bool baby)
 
 bool game_loop(kidiot_t *play, int keys[])
 {
-    char **map =
-        ((play->mom->floor == 0) ? play->first_floor : play->second_floor);
     move_players_baby(play, keys);
     move_players_mom(play, keys);
     if (check_death(play))

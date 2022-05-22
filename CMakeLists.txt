@@ -35,6 +35,8 @@ set(SRC
   src/game/init_game_split.c
   src/game/gest_mult_obs.c
   src/display/draw.c
+  src/display/draw_map.c
+  src/display/draw_entity.c
 )
 
 set(CMAKE_EXE_LINKER_FLAGS -fexceptions)

@@ -12,6 +12,7 @@ void free_everything(kidiot_t *kidiot)
     free_double_tab(kidiot->first_floor);
     free_double_tab(kidiot->second_floor);
     UnloadSound(kidiot->use);
+    for (size_t i = 0; i != 4; UnloadTexture(kidiot->textures[i]), i++);
     free(kidiot->baby->bathtub);
     free(kidiot->baby->electric);
     free(kidiot->baby->oven);
@@ -76,7 +77,7 @@ void main_loop(kidiot_t *kidiot)
         ClearBackground(BROWN);
         draw_map(kidiot, GetScreenHeight(), GetScreenWidth());
         DrawRectangle(15, 10, (int)kidiot->baby->hp, 20, GREEN);
-        asprintf(&time, "game time left : %0.1f", kidiot->game_time);
+        asprintf(&time, "game time left : %0.1fs", kidiot->game_time);
         DrawText(time, GetScreenWidth() / 3, 5, 20, LIGHTGRAY);
         free(time);
         gest_clock(kidiot, keys);
@@ -96,7 +97,8 @@ int main(int ac, char **av)
         return 84;
     InitWindow(atoi(av[1]), atoi(av[2]), "Kidiot");
     InitAudioDevice();
-    kidiot = init_kidiot(read_map("map/first_floor.txt"), read_map("map/second_floor.txt"));
+    kidiot = init_kidiot(read_map("map/first_floor.txt"),
+        read_map("map/second_floor.txt"));
     SetTargetFPS(atoi(av[3]));
     main_loop(kidiot);
     if (kidiot->game_time < 0)

@@ -28,10 +28,9 @@ void gest_clock_split(char **map, kidiot_t *play, int keys[], float time)
 {
     if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'C')
         find_cactus(play, (int)play->baby->pos.x, (int)play->baby->pos.y, time);
-    else {
+    else
         for (size_t i = 0; play->baby->cactus[i].floor != -1; i++)
             play->baby->cactus[i].time = 2;
-    }
     if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'B'
         && keys[4] == 1) {
         play->baby->bathtub->interaction = true;
