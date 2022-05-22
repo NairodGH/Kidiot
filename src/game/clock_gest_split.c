@@ -18,8 +18,9 @@ static void gest_clock_buff(char **map, kidiot_t *play, int keys[], float time)
         play->mom->pos.x = play->baby->pos.x;
         play->mom->pos.y = play->baby->pos.y;
     } else if (play->baby->vacuum->time > 0) {
-        DrawRectangle(GetScreenWidth() / 5, 10, play->baby->vacuum->time *
-        (GetScreenWidth() / 100), 20, RED);
+        DrawRectangle(GetScreenWidth() / 5, GetScreenHeight() / 100,
+        play->baby->vacuum->time *
+        (GetScreenWidth() / 100), GetScreenHeight() / 25, RED);
         play->baby->vacuum->time -= time;
     }
 }
@@ -35,11 +36,11 @@ void gest_clock_split(char **map, kidiot_t *play, int keys[], float time)
         && keys[4] == 1) {
         play->baby->bathtub->interaction = true;
         play->baby->bathtub->is_full[play->baby->floor] = true;
-    }
-    if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'B'
+    } if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'B'
         && play->baby->bathtub->is_full[play->baby->floor]) {
-        DrawRectangle(GetScreenWidth() / 5, 10, play->baby->bathtub->time *
-        (GetScreenWidth() / 100), 20, BLUE);
+        DrawRectangle(GetScreenWidth() / 5, GetScreenHeight() / 100,
+        play->baby->bathtub->time *
+        (GetScreenWidth() / 100), GetScreenHeight() / 25, BLUE);
         play->baby->bathtub->time -= time;
     } else {
         play->baby->bathtub->time = 4;

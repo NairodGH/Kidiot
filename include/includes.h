@@ -125,7 +125,7 @@ int get_map_size(char **map);
 void print_double_tab(char **map);
 void free_double_tab(char **map);
 
-kidiot_t *init_kidiot(char **first_floor, char **second_floor);
+kidiot_t *init_kidiot(char **first_floor, char **second_floor, int time);
 Vector2 find_spawn_pos(char cell, char **map);
 void print_keys(int keys[]);
 

@@ -47,8 +47,8 @@ int args_invalid(int ac, char **av)
         printf("coded in 2 days in C with the raylib.\n\tIt's an Epitech ");
         printf("GameJam (20/05/2022) project made by Dorian AYOUL and Xavier ");
         printf("TONNELLIER.\n\n%s[ARGUMENTS]%s\n\t-h\thelp\n\t[width] ", G, W);
-        printf("[height] [framerate]\tstart the game with a valid screen ");
-        printf("width/height/framerate\n\n%s[CONTROLS]%s\n\tBaby:\n\t", B, W);
+        printf("[height] [gametime]\tstart the game with a valid screen ");
+        printf("width/height/gametime\n\n%s[CONTROLS]%s\n\tBaby:\n\t", B, W);
         printf("Z\tgo up\n\tQ\tgo left\n\tS\tgo down\n\tD\tgo right\n\tSPACE");
         printf("\tinteract\n\n\tMom:\n\tUP ARROW\tgo up\n\tLEFT ARROW\tgo ");
         printf("left\n\tDOWN ARROW\tgo down\n\tRIGHT ARROW\tgo right\n\t");
@@ -76,14 +76,15 @@ void main_loop(kidiot_t *kidiot)
         BeginDrawing();
         ClearBackground(BROWN);
         draw_map(kidiot, GetScreenHeight(), GetScreenWidth());
-        DrawRectangle(15, 10, (int)kidiot->baby->hp, 20, GREEN);
+        DrawRectangle(15, GetScreenHeight() / 100, (int)kidiot->baby->hp,
+            GetScreenHeight() / 25, GREEN);
         asprintf(&time, "game time left : %0.1fs", kidiot->game_time);
-        DrawText(time, GetScreenWidth() / 2, 5, 20, LIGHTGRAY);
+        DrawText(time, GetScreenWidth() / 2, GetScreenHeight() / 100,
+            GetScreenHeight() / 20, WHITE);
         free(time);
         gest_clock(kidiot, keys);
         EndDrawing();
-        for (size_t i = 0; i != 10; i++)
-            keys[i] = 0;
+        for (size_t i = 0; i != 10; keys[i] = 0, i++);
     }
 }
 
@@ -98,8 +99,8 @@ int main(int ac, char **av)
     InitWindow(atoi(av[1]), atoi(av[2]), "Kidiot");
     InitAudioDevice();
     kidiot = init_kidiot(read_map("map/first_floor.txt"),
-        read_map("map/second_floor.txt"));
-    SetTargetFPS(atoi(av[3]));
+        read_map("map/second_floor.txt"), atoi(av[3]));
+    SetTargetFPS(60);
     main_loop(kidiot);
     if (kidiot->game_time < 0)
         end_screen(0, kidiot, (Vector2){0, 0});

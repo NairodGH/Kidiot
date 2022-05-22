@@ -9,8 +9,6 @@
 
 static void check_microwave(kidiot_t *play, char **map, float time)
 {
-    char *buffer = NULL;
-
     if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'M'
         && play->keys[4] == 1)
         play->baby->microwave->interaction = true;
@@ -21,9 +19,9 @@ static void check_microwave(kidiot_t *play, char **map, float time)
     }
     else if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'M' &&
         play->baby->microwave->is_open && play->baby->microwave->interaction) {
-        asprintf(&buffer, "time : %0.1f", play->baby->microwave->time);
-        DrawText(buffer, GetScreenWidth() / 5, 5, 20, LIGHTGRAY);
-        free(buffer);
+        DrawRectangle(GetScreenWidth() / 5, GetScreenHeight() / 100,
+        play->baby->microwave->time * (GetScreenWidth() / 100),
+        GetScreenHeight() / 25, LIGHTGRAY);
         play->baby->microwave->time -= time;
     } else {
         play->baby->microwave->time = 3;
@@ -42,8 +40,9 @@ static void check_oven(kidiot_t *play, char **map, float time)
         play->baby->oven->is_burning = true;
     else if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'O'
         && play->baby->oven->is_open && play->baby->oven->interaction) {
-        DrawRectangle(GetScreenWidth() / 5, 10, play->baby->oven->time *
-        (GetScreenWidth() / 100), 20, DARKGRAY);
+        DrawRectangle(GetScreenWidth() / 5, GetScreenHeight() / 100,
+        play->baby->oven->time * (GetScreenWidth() / 100),
+        GetScreenHeight() / 25, DARKGRAY);
         play->baby->oven->time -= time;
     } else {
         play->baby->oven->time = 3;

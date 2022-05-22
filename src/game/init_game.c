@@ -63,12 +63,12 @@ static void init_obs(baby_t *baby)
     baby->speed = 0.08;
 }
 
-static void init_kidiot_split(kidiot_t *kidiot, baby_t *baby, mom_t *mom)
+static void init_kidiot_split(kidiot_t *kidiot, baby_t *baby, mom_t *mom, int t)
 {
     cactus_t *cactus = init_cactus(kidiot);
     electric_t *electric = init_elec(kidiot);
 
-    kidiot->game_time = 90;
+    kidiot->game_time = t;
     baby->cactus = cactus;
     baby->electric = electric;
     kidiot->baby = baby;
@@ -80,7 +80,7 @@ static void init_kidiot_split(kidiot_t *kidiot, baby_t *baby, mom_t *mom)
     kidiot->textures[3] = LoadTexture("ressources/electricity.png");
 }
 
-kidiot_t *init_kidiot(char **first_floor, char **second_floor)
+kidiot_t *init_kidiot(char **first_floor, char **second_floor, int time)
 {
     kidiot_t *kidiot = malloc(sizeof(kidiot_t) * 1);
     baby_t *baby = malloc(sizeof(baby_t) * 1);
@@ -100,6 +100,6 @@ kidiot_t *init_kidiot(char **first_floor, char **second_floor)
     kidiot->tp = init_tp(kidiot->first_floor, kidiot->second_floor);
     if (!kidiot->tp)
         return NULL;
-    init_kidiot_split(kidiot, baby, mom);
+    init_kidiot_split(kidiot, baby, mom, time);
     return kidiot;
 }

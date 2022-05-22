@@ -39,8 +39,8 @@ void find_elec(kidiot_t *kidiot, int x, int y, float time)
         || kidiot->baby->electric[i].is_fixed)
         return;
     kidiot->baby->electric[i].time -= time;
-    DrawRectangle(GetScreenWidth() / 5, 10, kidiot->baby->electric[i].time *
-        (GetScreenWidth() / 100), 20, YELLOW);
+    DrawRectangle(GetScreenWidth() / 5, GetScreenHeight() / 100, kidiot->baby->
+    electric[i].time * (GetScreenWidth() / 100), GetScreenHeight() / 25,YELLOW);
     if (kidiot->baby->electric[i].time < 0)
         kidiot->baby->hp -= 100;
 }
