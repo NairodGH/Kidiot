@@ -42,9 +42,12 @@ void draw_misc(kidiot_t *kidiot, char cell, Rectangle dest, pos_t pos)
 
     if (cell == '#')
         DrawTexturePro(kidiot->textures[2], (Rectangle){950, 0, 73, 58}, dest, orig, 0, RAYWHITE);
-    if (cell == 'B')
-        DrawTexturePro(kidiot->textures[2], (Rectangle){366, 0, 30, 58},
-        dest, orig, 0, RAYWHITE);
+    if (cell == 'B') {
+        if (kidiot->baby->bathtub->is_full[pos.floor])
+            DrawTexturePro(kidiot->textures[2], (Rectangle){293, 0, 30, 58}, dest, orig, 0, RAYWHITE);
+        else
+            DrawTexturePro(kidiot->textures[2], (Rectangle){366, 0, 30, 58}, dest, orig, 0, RAYWHITE);
+    }
     if (cell == 'C')
         draw_cactus(kidiot, dest, pos);
     if (cell == 'E')

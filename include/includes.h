@@ -62,7 +62,7 @@ typedef struct {
 } microwave_t;
 
 typedef struct {
-    bool is_open[2];
+    bool is_full[2];
     float time;
     bool interaction;
 } bathtub_t;

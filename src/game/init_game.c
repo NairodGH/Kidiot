@@ -52,8 +52,8 @@ static void init_obs(baby_t *baby)
 
     frigde->is_open = false;
     frigde->time = 0;
-    bathtub->is_open[0] = true;
-    bathtub->is_open[1] = true;
+    bathtub->is_full[0] = false;
+    bathtub->is_full[1] = false;
     bathtub->time = 4;
     bathtub->interaction = false;
     baby->fridge = frigde;
