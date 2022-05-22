@@ -83,7 +83,6 @@ static void check_mom_rescue(kidiot_t *play, int keys[])
     if ((int)play->mom->pos.x == (int)play->baby->pos.x && keys[9] == 1
         && (int)play->mom->pos.y == (int)play->baby->pos.y
         && play->baby->floor == play->mom->floor) {
-            printf("here\n");
         play->baby->oven->is_burning = false;
         play->baby->speed = 0.08;
     }
