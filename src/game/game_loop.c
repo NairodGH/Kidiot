@@ -14,9 +14,10 @@ static void split_check_death(kidiot_t *player, char **map)
         player->baby->oven->time_burn = 1;
     }
     if (player->keys[4] == 1)
-        player->baby->fridge->is_open = true;
+        player->baby->fridge->interaction = true;
     if (map[(int)player->baby->pos.x][(int)player->baby->pos.y] == 'F' && 
-        player->baby->fridge->time <= 0 && player->baby->fridge->is_open) {
+        player->baby->fridge->time <= 0 && player->baby->fridge->is_open
+        && player->baby->fridge->interaction) {
         player->baby->hp -= 20;
         player->baby->fridge->time = 5;
     }
@@ -27,8 +28,10 @@ static bool check_death(kidiot_t *player)
     char **map = player->baby->floor == 0
         ? player->first_floor : player->second_floor;
 
-    if (player->baby->bathtub->time <= 0)
+    if (player->baby->bathtub->time <= 0) {
+        player->baby->hp = 0;
         return true;
+    }
     split_check_death(player, map);
     if (player->baby->hp <= 0)
         return true;

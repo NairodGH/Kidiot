@@ -50,7 +50,8 @@ static void init_obs(baby_t *baby)
     frigde_t *frigde = malloc(sizeof(frigde_t) * 1);
     bathtub_t *bathtub = malloc(sizeof(bathtub_t) * 1);
 
-    frigde->is_open = false;
+    frigde->is_open = true;
+    frigde->interaction = false;
     frigde->time = 0;
     bathtub->is_full[0] = false;
     bathtub->is_full[1] = false;

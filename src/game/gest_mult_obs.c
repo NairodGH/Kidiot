@@ -74,7 +74,7 @@ void find_cactus(kidiot_t *kidiot, int x, int y, float time)
     }
     if (kidiot->baby->cactus[i].floor == -1 || kidiot->baby->cactus[i].is_cut)
         return;
-    if (kidiot->baby->cactus[i].time <= 0) {
+    if (kidiot->baby->cactus[i].time <= 0 && kidiot->keys[4] == 1) {
         kidiot->baby->hp -= 10;
          kidiot->baby->cactus[i].time = 2;
     }

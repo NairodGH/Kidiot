@@ -52,6 +52,7 @@ typedef struct {
 
 typedef struct {
     bool is_open;
+    bool interaction;
     float time;
 } frigde_t;
 
