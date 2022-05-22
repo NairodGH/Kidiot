@@ -91,6 +91,7 @@ typedef struct {
     char **first_floor;
     char **second_floor;
     Texture2D textures[4];
+    Sound use;
     int *keys;
     float game_time;
 } kidiot_t;

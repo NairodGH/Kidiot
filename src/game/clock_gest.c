@@ -96,6 +96,8 @@ void gest_clock_split(char **map, kidiot_t *play, int keys[], float time)
     if (keys[4] == 1 &&
         (map[(int)(play->baby->pos.x)][(int)play->baby->pos.y]) == 'V'
         && !play->baby->vacuum->already_use) {
+        printf("la\n");
+        PlaySound(play->use);
         play->baby->vacuum->already_use = true;
         play->baby->vacuum->time = 3;
     } else if (play->baby->vacuum->time > 0) {

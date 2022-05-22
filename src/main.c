@@ -7,12 +7,11 @@
 
 #include "includes.h"
 
-void free_everything(kidiot_t *kidiot, char *buffer)
+void free_everything(kidiot_t *kidiot)
 {
-    if (buffer)
-        free(buffer);
     free_double_tab(kidiot->first_floor);
     free_double_tab(kidiot->second_floor);
+    UnloadSound(kidiot->use);
     free(kidiot->baby->bathtub);
     free(kidiot->baby->electric);
     free(kidiot->baby->oven);
@@ -63,7 +62,7 @@ int args_invalid(int ac, char **av)
     return 0;
 }
 
-void main_loop(kidiot_t *kidiot, char **buffer)
+void main_loop(kidiot_t *kidiot)
 {
     int save_hp = kidiot->baby->hp;
     char *time = NULL;
@@ -76,11 +75,7 @@ void main_loop(kidiot_t *kidiot, char **buffer)
         BeginDrawing();
         ClearBackground(RAYWHITE);
         draw_map(kidiot, GetScreenHeight(), GetScreenWidth());
-        if (kidiot->baby->hp != save_hp) {
-            free(*buffer);
-            asprintf(buffer, "baby hp = %d", kidiot->baby->hp);
-        }
-        DrawText(*buffer, 10, 5, 20, LIGHTGRAY);
+        DrawRectangle(20, 10, (int)kidiot->baby->hp, 20, GREEN);
         asprintf(&time, "game time left : %0.1f", kidiot->game_time);
         DrawText(time, GetScreenWidth() / 3, 5, 20, LIGHTGRAY);
         free(time);
@@ -94,22 +89,22 @@ void main_loop(kidiot_t *kidiot, char **buffer)
 int main(int ac, char **av)
 {
     int save_hp = 0;
-    char *buffer = NULL;
     kidiot_t *kidiot;
     
     SetTraceLogLevel(LOG_NONE);
     if (args_invalid(ac, av))
         return 84;
     InitWindow(atoi(av[1]), atoi(av[2]), "Kidiot");
+    InitAudioDevice();
     kidiot = init_kidiot(read_map("map/first_floor.txt"), read_map("map/second_floor.txt"));
     SetTargetFPS(atoi(av[3]));
-    asprintf(&buffer, "baby hp = %d", kidiot->baby->hp);
-    main_loop(kidiot, &buffer);
+    main_loop(kidiot);
     if (!kidiot->game_time <= 0)
         screen_loose();
     else
         screen_win();
-    free_everything(kidiot, buffer);
+    free_everything(kidiot);
+    CloseAudioDevice();
     CloseWindow();
     return 0;
 }

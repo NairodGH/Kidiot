@@ -86,6 +86,7 @@ kidiot_t *init_kidiot(char **first_floor, char **second_floor)
     if (!kidiot || !baby || !mom)
         return NULL;
     init_obs(baby);
+    kidiot->use = LoadSound("ressources/use.mp3");
     mom->floor = 0;
     mom->speed = 0.05;
     kidiot->first_floor = first_floor;
