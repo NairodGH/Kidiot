@@ -48,9 +48,9 @@ static void init_obs(baby_t *baby)
     frigde_t *frigde = malloc(sizeof(frigde_t) * 1);
     bathtub_t *bathtub = malloc(sizeof(bathtub_t) * 1);
 
-    frigde->is_open = true;
+    frigde->is_open = false;
     frigde->time = 0;
-    bathtub->is_open = true;
+    bathtub->is_open = false;
     bathtub->time = 4;
     baby->fridge = frigde;
     baby->bathtub = bathtub;
@@ -68,6 +68,7 @@ static void init_kidiot_split(kidiot_t *kidiot, baby_t *baby, mom_t *mom)
     baby->electric = electric;
     kidiot->baby = baby;
     kidiot->mom = mom;
+    kidiot->use = LoadSound("ressources/use.mp3");
     kidiot->textures[0] = LoadTexture("ressources/maggie.png");
     kidiot->textures[1] = LoadTexture("ressources/marge.png");
     kidiot->textures[2] = LoadTexture("ressources/misc.png");
@@ -83,7 +84,6 @@ kidiot_t *init_kidiot(char **first_floor, char **second_floor)
     if (!kidiot || !baby || !mom)
         return NULL;
     init_obs(baby);
-    kidiot->use = LoadSound("ressources/use.mp3");
     mom->floor = 0;
     mom->speed = 0.05;
     kidiot->first_floor = first_floor;

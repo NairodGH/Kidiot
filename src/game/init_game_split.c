@@ -7,10 +7,23 @@
 
 #include "includes.h"
 
+static void end_c(Vector2 *nb_cac, Vector2 *nb_cac_s, cactus_t *cac, size_t i)
+{
+    cac[i].floor = -1;
+    free(nb_cac);
+    free(nb_cac_s);
+}
+
+static void end_e(Vector2 *nb_cac, Vector2 *nb_cac_s, electric_t *el, size_t i)
+{
+    el[i].floor = -1;
+    free(nb_cac);
+    free(nb_cac_s);
+}
+
 electric_t *init_elec(kidiot_t *kidiot)
 {
     size_t i = 0;
-    int floor = 0;
     Vector2 *nb_cac = find_all_cell(kidiot->first_floor, 'E');
     Vector2 *nb_cac_s = find_all_cell(kidiot->second_floor, 'E');
     electric_t *elec = malloc(sizeof(electric_t) *
@@ -28,7 +41,7 @@ electric_t *init_elec(kidiot_t *kidiot)
         elec[i].is_fixed = false;
         elec[i].floor = 1;
     }
-    elec[i].floor = -1;
+    end_e(nb_cac, nb_cac_s, elec, i);
     return elec;
 }
 
@@ -36,7 +49,6 @@ electric_t *init_elec(kidiot_t *kidiot)
 cactus_t *init_cactus(kidiot_t *kidiot)
 {
     size_t i = 0;
-    int floor = 0;
     Vector2 *nb_cac = find_all_cell(kidiot->first_floor, 'C');
     Vector2 *nb_cac_s = find_all_cell(kidiot->second_floor, 'C');
     cactus_t *cactus = malloc(sizeof(cactus_t) *
@@ -54,6 +66,6 @@ cactus_t *init_cactus(kidiot_t *kidiot)
         cactus[i].is_cut = false;
         cactus[i].floor = 1;
     }
-    cactus[i].floor = -1;
+    end_c(nb_cac, nb_cac_s, cactus, i);
     return cactus;
 }

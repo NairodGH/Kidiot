@@ -28,6 +28,7 @@ set(SRC
   src/game/game_loop.c
   src/game/move_players.c
   src/game/clock_gest.c
+  src/game/clock_gest_split.c
   src/game/map_utils_other.c
   src/game/win_screen.c
   src/game/load_map.c

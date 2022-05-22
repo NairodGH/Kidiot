@@ -127,6 +127,7 @@ void move_players_baby(kidiot_t *play, int keys[]);
 void draw_map(kidiot_t *play, int hg, int wd);
 
 void gest_clock(kidiot_t *players, int key[]);
+void gest_clock_split(char **map, kidiot_t *play, int keys[], float time);
 
 void screen_win();
 void screen_loose();

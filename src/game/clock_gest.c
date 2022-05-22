@@ -87,38 +87,11 @@ static void check_mom_rescue(kidiot_t *play, int keys[])
         play->tp->is_open[1] = false;
 }
 
-void gest_clock_split(char **map, kidiot_t *play, int keys[], float time)
-{
-    char *buffer = NULL;
-
-    if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'B'
-        && play->baby->bathtub->is_open) {
-        asprintf(&buffer, "time : %0.1f", play->baby->bathtub->time);
-        DrawText(buffer, GetScreenWidth() / 5, 5, 20, LIGHTGRAY);
-        free(buffer);
-        play->baby->bathtub->time -= time;
-    } else
-        play->baby->bathtub->time = 4;
-    if (keys[4] == 1 &&
-        (map[(int)(play->baby->pos.x)][(int)play->baby->pos.y]) == 'V'
-        && !play->baby->vacuum->already_use) {
-        PlaySound(play->use);
-        play->baby->vacuum->already_use = true;
-        play->baby->vacuum->time = 3;
-    } else if (play->baby->vacuum->time > 0) {
-        asprintf(&buffer, "time : %0.1f", play->baby->vacuum->time);
-        DrawText(buffer, GetScreenWidth() / 5, 5, 20, LIGHTGRAY);
-        free(buffer);
-        play->baby->vacuum->time -= time;
-    }
-}
-
 void gest_clock(kidiot_t *play, int keys[])
 {
     char **map = play->baby->floor == 0 ?
         play->first_floor : play->second_floor;
     float time = GetFrameTime();
-    char *buffer;
 
     play->game_time -= time;
     check_mom_rescue(play, keys);
@@ -131,12 +104,6 @@ void gest_clock(kidiot_t *play, int keys[])
     else {
         for (size_t i = 0; play->baby->electric[i].floor != -1; i++)
             play->baby->electric[i].time = 5;
-    }
-    if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'C')
-        find_cactus(play, (int)play->baby->pos.x, (int)play->baby->pos.y, time);
-    else {
-        for (size_t i = 0; play->baby->cactus[i].floor != -1; i++)
-            play->baby->cactus[i].time = 2;
     }
     gest_clock_split(map, play, keys, time);
     check_oven(play, map, time);

@@ -7,7 +7,7 @@
 
 #include "includes.h"
 
-bool check_speed(kidiot_t *play, int keys[], bool baby)
+static bool check_speed(kidiot_t *play, int keys[], bool baby)
 {
     Vector2 *pos = (baby ? &play->baby->temp_pos : &play->mom->temp_pos);
     float speed = (baby ? play->baby->speed : play->mom->speed);

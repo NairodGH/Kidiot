@@ -27,7 +27,6 @@ void find_rescue_elec(kidiot_t *kidiot, int x, int y)
 void find_elec(kidiot_t *kidiot, int x, int y, float time)
 {
     size_t i = 0;
-    char *buffer = NULL;
 
     for (i = 0; kidiot->baby->electric[i].floor != -1; i++) {
         if ((int)kidiot->baby->electric[i].pos.x == y &&
@@ -39,10 +38,8 @@ void find_elec(kidiot_t *kidiot, int x, int y, float time)
     if (kidiot->baby->electric[i].floor == -1
         || kidiot->baby->electric[i].is_fixed)
         return;
-    asprintf(&buffer, "time : %0.1f", kidiot->baby->electric[i].time);
-    DrawText(buffer, GetScreenWidth() / 5, 5, 20, LIGHTGRAY);
-    free(buffer);
     kidiot->baby->electric[i].time -= time;
+    DrawRectangle(200, 10, kidiot->baby->electric[i].time * 10, 20, RED);
     if (kidiot->baby->electric[i].time < 0)
         kidiot->baby->hp -= 100;
 }

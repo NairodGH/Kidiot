@@ -13,6 +13,8 @@ static void split_check_death(kidiot_t *player, char **map)
         player->baby->hp -= 10;
         player->baby->oven->time_burn = 1;
     }
+    if (player->keys[4] == 1)
+        player->baby->fridge->is_open = true;
     if (map[(int)player->baby->pos.x][(int)player->baby->pos.y] == 'F' && 
         player->baby->fridge->time <= 0 && player->baby->fridge->is_open) {
         player->baby->hp -= 20;
@@ -67,7 +69,7 @@ bool is_obstacle(char obs, kidiot_t *play, bool baby)
         else if (play->baby->floor == 1 && play->tp->is_open[1])
             play->baby->pos = play->tp->pos_toilet[0];
         else
-            return true;
+            return false;
         play->baby->floor ==
             0 ? (play->baby->floor = 1) : (play->baby->floor = 0);
         return true;
