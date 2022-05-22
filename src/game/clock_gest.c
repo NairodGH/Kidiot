@@ -12,43 +12,53 @@ static void check_microwave(kidiot_t *play, char **map, float time)
     char *buffer = NULL;
 
     if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'M'
-        && play->baby->microwave->is_open && play->baby->microwave->time <= 0)
+        && play->keys[4] == 1)
+        play->baby->microwave->interaction = true;
+    if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'M'
+        && play->baby->microwave->is_open && play->baby->microwave->time <= 0) {
         play->baby->speed = 0.1;
-    else if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'M'
-        && play->baby->microwave->is_open) {
+        play->baby->microwave->is_open = false;
+    }
+    else if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'M' &&
+        play->baby->microwave->is_open && play->baby->microwave->interaction) {
         asprintf(&buffer, "time : %0.1f", play->baby->microwave->time);
         DrawText(buffer, GetScreenWidth() / 5, 5, 20, LIGHTGRAY);
         free(buffer);
         play->baby->microwave->time -= time;
-    }
-    else
+    } else {
         play->baby->microwave->time = 3;
+        play->baby->microwave->interaction = false;
+    }
 }
 
 static void check_oven(kidiot_t *play, char **map, float time)
 {
     char *buffer = NULL;
 
+    if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'O'
+        && play->keys[4] == 1)
+        play->baby->oven->interaction = true;
     if (play->baby->oven->is_burning == true)
         play->baby->oven->time_burn -= time;
     if (play->baby->oven->time <= 0)
         play->baby->oven->is_burning = true;
     else if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'O'
-        && play->baby->oven->is_open == true) {
+        && play->baby->oven->is_open && play->baby->oven->interaction) {
         asprintf(&buffer, "time : %0.1f", play->baby->oven->time);
         DrawText(buffer, GetScreenWidth() / 5, 5, 20, LIGHTGRAY);
         free(buffer);    
         play->baby->oven->time -= time;
-    }
-    else
+    } else {
         play->baby->oven->time = 3;
+        play->baby->oven->interaction = false;
+    }
     check_microwave(play, map, time);
 }
 
 static void check_mom_rescue_split(char **map, kidiot_t *play, int keys[])
 {
     if (map[(int)play->mom->pos.x][(int)play->mom->pos.y] == 'B'
-        && keys[9] == 1)
+        && keys[9] == 1 && play->mom->floor == play->baby->floor)
         play->baby->bathtub->is_open = false;
     if (map[(int)play->mom->pos.x][(int)play->mom->pos.y] == 'F'
         && keys[9] == 1)

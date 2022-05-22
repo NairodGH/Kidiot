@@ -40,6 +40,7 @@ typedef struct {
 typedef struct {
     bool is_open;
     bool is_burning;
+    bool interaction;
     float time;
     float time_burn;
 } oven_t;
@@ -47,6 +48,7 @@ typedef struct {
 typedef struct {
     bool is_open;
     float time;
+    bool interaction;
 } bathtub_t;
 
 typedef struct {
@@ -56,6 +58,7 @@ typedef struct {
 
 typedef struct {
     bool is_open;
+    bool interaction;
     float time;
 } microwave_t;
 

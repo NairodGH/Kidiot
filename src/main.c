@@ -73,9 +73,9 @@ void main_loop(kidiot_t *kidiot)
         if (game_loop(kidiot, keys) || kidiot->game_time < 0)
             break;
         BeginDrawing();
-        ClearBackground(RAYWHITE);
+        ClearBackground(BROWN);
         draw_map(kidiot, GetScreenHeight(), GetScreenWidth());
-        DrawRectangle(20, 10, (int)kidiot->baby->hp, 20, GREEN);
+        DrawRectangle(15, 10, (int)kidiot->baby->hp, 20, GREEN);
         asprintf(&time, "game time left : %0.1f", kidiot->game_time);
         DrawText(time, GetScreenWidth() / 3, 5, 20, LIGHTGRAY);
         free(time);
@@ -99,10 +99,10 @@ int main(int ac, char **av)
     kidiot = init_kidiot(read_map("map/first_floor.txt"), read_map("map/second_floor.txt"));
     SetTargetFPS(atoi(av[3]));
     main_loop(kidiot);
-    if (!kidiot->game_time <= 0)
-        screen_loose();
-    else
+    if (kidiot->game_time < 0)
         screen_win();
+    else if (kidiot->baby->hp <= 0)
+        screen_loose();
     free_everything(kidiot);
     CloseAudioDevice();
     CloseWindow();

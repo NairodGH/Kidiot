@@ -9,8 +9,6 @@
 
 static void gest_clock_buff(char **map, kidiot_t *play, int keys[], float time)
 {
-    char *buffer = NULL;
-
     if (keys[4] == 1 &&
         (map[(int)(play->baby->pos.x)][(int)play->baby->pos.y]) == 'V'
         && !play->baby->vacuum->already_use) {
@@ -20,17 +18,14 @@ static void gest_clock_buff(char **map, kidiot_t *play, int keys[], float time)
         play->mom->pos.x = play->baby->pos.x;
         play->mom->pos.y = play->baby->pos.y;
     } else if (play->baby->vacuum->time > 0) {
-        asprintf(&buffer, "time : %0.1f", play->baby->vacuum->time);
-        DrawText(buffer, GetScreenWidth() / 5, 5, 20, LIGHTGRAY);
-        free(buffer);
+        DrawRectangle(GetScreenWidth() / 5, 10, play->baby->vacuum->time *
+        (GetScreenWidth() / 100), 20, RED);
         play->baby->vacuum->time -= time;
     }
 }
 
 void gest_clock_split(char **map, kidiot_t *play, int keys[], float time)
 {
-    char *buffer = NULL;
-
     if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'C')
         find_cactus(play, (int)play->baby->pos.x, (int)play->baby->pos.y, time);
     else {
@@ -39,14 +34,15 @@ void gest_clock_split(char **map, kidiot_t *play, int keys[], float time)
     }
     if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'B'
         && keys[4] == 1)
-        play->baby->bathtub->is_open = true;
+        play->baby->bathtub->interaction = true;
     if (map[(int)play->baby->pos.x][(int)play->baby->pos.y] == 'B'
-        && play->baby->bathtub->is_open) {
-        asprintf(&buffer, "time : %0.1f", play->baby->bathtub->time);
-        DrawText(buffer, GetScreenWidth() / 5, 5, 20, LIGHTGRAY);
-        free(buffer);
+        && play->baby->bathtub->is_open && play->baby->bathtub->interaction) {
+        DrawRectangle(GetScreenWidth() / 5, 10, play->baby->bathtub->time *
+        (GetScreenWidth() / 100), 20, BLUE);
         play->baby->bathtub->time -= time;
-    } else
+    } else {
         play->baby->bathtub->time = 4;
+        play->baby->bathtub->interaction = false;
+    }
     gest_clock_buff(map, play, keys, time);
 }

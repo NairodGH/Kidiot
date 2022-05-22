@@ -30,8 +30,10 @@ static void init_obs_split(baby_t *baby)
 
     microwave->time = 3;
     microwave->is_open = true;
+    microwave->interaction = false;
     vacuum->already_use = false;
     vacuum->time = 0;
+    oven->interaction = false;
     oven->is_open = true;
     oven->is_burning = false;
     oven->time = 3;
@@ -50,8 +52,9 @@ static void init_obs(baby_t *baby)
 
     frigde->is_open = false;
     frigde->time = 0;
-    bathtub->is_open = false;
+    bathtub->is_open = true;
     bathtub->time = 4;
+    bathtub->interaction = false;
     baby->fridge = frigde;
     baby->bathtub = bathtub;
     init_obs_split(baby);
@@ -63,7 +66,7 @@ static void init_kidiot_split(kidiot_t *kidiot, baby_t *baby, mom_t *mom)
     cactus_t *cactus = init_cactus(kidiot);
     electric_t *electric = init_elec(kidiot);
 
-    kidiot->game_time = 30;
+    kidiot->game_time = 90;
     baby->cactus = cactus;
     baby->electric = electric;
     kidiot->baby = baby;

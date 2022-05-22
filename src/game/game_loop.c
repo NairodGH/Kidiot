@@ -10,7 +10,7 @@
 static void split_check_death(kidiot_t *player, char **map)
 {
     if (player->baby->oven->is_burning && player->baby->oven->time_burn < 0) {
-        player->baby->hp -= 10;
+        player->baby->hp -= 5;
         player->baby->oven->time_burn = 1;
     }
     if (player->keys[4] == 1)
@@ -79,6 +79,8 @@ bool is_obstacle(char obs, kidiot_t *play, bool baby)
 
 bool game_loop(kidiot_t *play, int keys[])
 {
+    char **map =
+        ((play->mom->floor == 0) ? play->first_floor : play->second_floor);
     move_players_baby(play, keys);
     move_players_mom(play, keys);
     if (check_death(play))
