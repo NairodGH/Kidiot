@@ -52,7 +52,7 @@ int args_invalid(int ac, char **av)
         printf("Z\tgo up\n\tQ\tgo left\n\tS\tgo down\n\tD\tgo right\n\tSPACE");
         printf("\tinteract\n\n\tMom:\n\tUP ARROW\tgo up\n\tLEFT ARROW\tgo ");
         printf("left\n\tDOWN ARROW\tgo down\n\tRIGHT ARROW\tgo right\n\t");
-        return printf("NUMPAD 0\tinteract\n\nCheck the readme for more info\n");
+        return printf("ENTER\tinteract\n\nCheck the readme for more info\n");
     }
     if (ac != 4)
         return fprintf(stderr, "%s[ERROR]%s Invalid number of args\n", R, W);

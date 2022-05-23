@@ -8,6 +8,11 @@ Basically a 2d "Who's your daddy" coded in C with raylib.
 - b = baby spawn point
 - m = mom spawn point
 
+```
+- # = Wall
+- + = Invisible collision box (for big sprites like Table)
+-   = Ground
+```
 - B = Bathtub
 - C = Cactus
 - E = Electric outlet
@@ -36,7 +41,7 @@ first_floor.txt
 ### ###      T++mb    #
 #    C#              S#
 #     #               #
-#EV   #               #
+#E  V #               #
 #######################
 ```
 
@@ -61,9 +66,11 @@ second_floor.txt
 You can modify them as you please but keep the basics in place to not break it:
 - 1 baby spawn point
 - 1 mom spawn point
-- only 1 furniture of each type except cactus and electrical outlets
-- 1 WC downstairs if 1 WC upstairs and vice versa
-- 1 bathtub downstairs if 1 bathtub upstairs and vice versa
+- walls surrounding the house (we did not make an open-world lmao)
+- only 1 furniture of each type on both floors except:
+  - unlimited cactus and electrical outlets
+  - there can be 1 bathtub per floor
+  - 1 WC downstairs if 1 WC upstairs and vice versa
 
 ## Balancing
 
@@ -71,9 +78,9 @@ As the baby:
 - Bathtub = press once to fill up then stay 4secs in it to drown
 - Cactus = press once to take 10 damage, 5secs cooldown
 - Electric outlet = stay on it for 5secs to electrocute
-- Fridge = press once to open and stay in it to take 10 damage per second
+- Fridge = press once to open and stay in it to take 20 damage per second
 - Microwave = press once to open then stay 3secs in it to gain a speed boost
-- Oven = press once to open then stay 3secs in it to take 1 damage per second
+- Oven = press once to open then stay 3secs in it to take 5 damage per second
 - Vacuum cleaner = press once to vacuum the mom into it for 3secs no matter where she was
 - WC = press once to teleport to the other toilet
 
